@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
   <script src="data/config.js"></script>
   <script src="data/auth_db.js"></script>
   <style>
@@ -90,7 +92,7 @@
       height: 40px;
       border-radius: 10px;
       background: #F0F7FF;
-      color: #087BFF;
+      color: #0A68DC;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -109,7 +111,7 @@
       text-decoration: none;
     }
     .info-text-group a:hover {
-      color: #087BFF;
+      color: #0A68DC;
       text-decoration: underline;
     }
 
@@ -162,7 +164,7 @@
       background: #FFFFFF;
     }
     .form-control-input:focus {
-      border-color: #087BFF;
+      border-color: #0A68DC;
       box-shadow: 0 0 0 3px rgba(8, 123, 255, 0.15);
     }
     textarea.form-control-input {
@@ -176,7 +178,7 @@
       gap: 12px;
     }
     .btn-contact-submit {
-      background: #087BFF;
+      background: #0A68DC;
       color: #FFFFFF;
       border: none;
       border-radius: 8px;
@@ -241,7 +243,7 @@
       <a href="index.html" class="brand-logo" aria-label="SkillOra Home">
         <div class="logo-mark">
           <svg class="logo-symbol" viewBox="0 0 38 38" fill="none">
-            <rect width="38" height="38" rx="8" fill="#087BFF"/>
+            <rect width="38" height="38" rx="8" fill="#0A68DC"/>
             <path d="M10 26L19 12L28 26H10Z" fill="#FFFFFF"/>
             <circle cx="19" cy="18" r="3.5" fill="#FF922A"/>
           </svg>
@@ -256,7 +258,8 @@
         <a href="index.html" class="nav-link">Home</a>
         <a href="colleges.html" class="nav-link">Colleges & Admissions</a>
         <a href="jobs.html" class="nav-link">Find Jobs</a>
-        <a href="contact.html" class="nav-link" style="color:var(--color-primary-blue, #087BFF);font-weight:800;">Contact</a>
+        <a href="apply-job.html" class="nav-link">Apply for Job</a>
+        <a href="contact.html" class="nav-link" style="color:var(--color-primary-blue, #0A68DC);font-weight:800;">Contact</a>
         <a href="admin.html" target="_blank" rel="noopener" class="nav-link">Admin Portal</a>
       </nav>
 
@@ -278,7 +281,7 @@
         <div class="brand-logo" style="width:auto;">
           <div class="logo-mark" style="width:32px;height:32px;">
             <svg class="logo-symbol" viewBox="0 0 38 38" fill="none">
-              <rect width="38" height="38" rx="8" fill="#087BFF"/>
+              <rect width="38" height="38" rx="8" fill="#0A68DC"/>
               <path d="M10 26L19 12L28 26H10Z" fill="#FFFFFF"/>
               <circle cx="19" cy="18" r="3.5" fill="#FF922A"/>
             </svg>
@@ -386,7 +389,7 @@
 
         <div class="map-action-row">
           <span style="font-size:12px;color:#728DA9;">Opposite Nirman Vihar Metro Station (Blue Line)</span>
-          <a href="https://maps.google.com/?q=V3S+Mall+Nirman+Vihar+Delhi" target="_blank" rel="noopener" style="font-size:12.5px;color:#087BFF;font-weight:700;text-decoration:none;">Open in Google Maps ↗</a>
+          <a href="https://maps.google.com/?q=V3S+Mall+Nirman+Vihar+Delhi" target="_blank" rel="noopener" style="font-size:12.5px;color:#0A68DC;font-weight:700;text-decoration:none;">Open in Google Maps ↗</a>
         </div>
       </div>
     </div>
@@ -602,5 +605,6 @@
     show('support-wa-link', 'support-wa-missing', c.SUPPORT_WHATSAPP, 'https://wa.me/' + digits(c.SUPPORT_WHATSAPP), ' (Counseling Support)');
   })();
 </script>
+<script src="theme.js" defer></script>
 </body>
 </html>

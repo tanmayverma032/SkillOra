@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
   <script src="data/config.js"></script>
   <script src="data/auth_db.js"></script>
   <style>
@@ -118,7 +120,7 @@
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .full-job-card:hover {
-      border-color: #087BFF;
+      border-color: #0A68DC;
       box-shadow: 0 10px 24px rgba(8, 123, 255, 0.12);
       transform: translateY(-2px);
     }
@@ -233,7 +235,7 @@
       <a href="index.html" class="brand-logo" aria-label="SkillOra Home">
         <div class="logo-mark">
           <svg class="logo-symbol" viewBox="0 0 38 38" fill="none">
-            <rect width="38" height="38" rx="8" fill="#087BFF"/>
+            <rect width="38" height="38" rx="8" fill="#0A68DC"/>
             <path d="M10 26L19 12L28 26H10Z" fill="#FFFFFF"/>
             <circle cx="19" cy="18" r="3.5" fill="#FF922A"/>
           </svg>
@@ -247,6 +249,7 @@
       <nav class="nav-menu">
         <a href="index.html" class="nav-link">Home</a>
         <a href="jobs.html" class="nav-link" style="color:var(--color-primary-blue);font-weight:800;">Find Jobs</a>
+        <a href="apply-job.html" class="nav-link">Apply for Job</a>
         <a href="colleges.html" class="nav-link">Colleges & Admissions</a>
         <a href="contact.html" class="nav-link" id="nav-contact-link">Contact</a>
       </nav>
@@ -273,13 +276,14 @@
       <div class="mobile-nav-links">
         <a href="index.html" class="mob-link"><span>🏠</span> Home</a>
         <a href="jobs.html" class="mob-link active"><span>💼</span> Find Jobs</a>
+        <a href="apply-job.html" class="mob-link"><span>📝</span> Apply for Job</a>
         <a href="colleges.html" class="mob-link"><span>🎓</span> Colleges & Admissions</a>
-        <a href="contact.html" class="mob-link"><span>📍</span> Contact Us</a>
+        <a href="contact.html" class="mob-link"><span></span> Contact Us</a>
         <div class="mob-divider"></div>
         <a href="auth.html?role=student" class="mob-link mob-highlight"><span>🔐</span> Student Login / Sign Up</a>
         <a href="college-portal.html" class="mob-link"><span>🏫</span> College Partner Portal</a>
-        <a href="employer-portal.html" class="mob-link"><span>🏨</span> Hospital & Hotel HR Portal</a>
-        <a href="admin.html" target="_blank" rel="noopener" class="mob-link mob-admin-link"><span>🛡️</span> Admin Console</a>
+        <a href="employer-portal.html" class="mob-link"><span></span> Hospital & Hotel HR Portal</a>
+        <a href="admin.html" target="_blank" rel="noopener" class="mob-link mob-admin-link"><span><i class="ic ic-shield"></i></span> Admin Console</a>
       </div>
     </div>
   </div>
@@ -295,7 +299,21 @@
     </div>
   </div>
 
-  <!-- Dedicated Main Layout -->
+  <!-- Direct Placement Fast-Track CTA Banner -->
+  <div style="max-width:1200px;margin:20px auto 0;padding:0 20px;">
+    <div style="background:linear-gradient(135deg, #0A2540 0%, #173C62 100%);border-radius:12px;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;box-shadow:0 6px 18px rgba(10,37,64,0.12);">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#FF922A;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">⚡</div>
+        <div>
+          <h3 style="margin:0 0 4px;font-size:16px;font-weight:800;color:#FFFFFF;font-family:var(--font-heading, sans-serif);">Looking for Direct Placement without searching?</h3>
+          <p style="margin:0;font-size:13px;color:#D2E4F5;">Upload your resume and submit your location & sector preferences. Our placement cell connects you directly with hiring employers.</p>
+        </div>
+      </div>
+      <a href="apply-job.html" class="btn" style="background:#FF922A;color:#FFFFFF;padding:10px 20px;border-radius:8px;font-weight:800;font-size:13.5px;text-decoration:none;white-space:nowrap;box-shadow:0 4px 12px rgba(255,146,42,0.35);">Apply with Resume →</a>
+    </div>
+  </div>
+
+    <!-- Dedicated Main Layout -->
   <div class="jobs-layout">
     
     <!-- Left Filter Sidebar -->
@@ -353,10 +371,10 @@
       
       <!-- Sector Tabs Strip -->
       <div class="sector-tab-strip">
-        <button class="sec-pill-btn active" onclick="setSectorPill('All', this)">All Jobs (6)</button>
-        <button class="sec-pill-btn" onclick="setSectorPill('Healthcare', this)">🏥 Hospitals & Nursing</button>
-        <button class="sec-pill-btn" onclick="setSectorPill('Hospitality', this)">🏨 Hotels & Resorts</button>
-        <button class="sec-pill-btn" onclick="setSectorPill('Sales', this)">💼 Corporate Sales</button>
+        <button class="sec-pill-btn active" id="pill-all-jobs" onclick="setSectorPill('All', this)">All jobs</button>
+        <button class="sec-pill-btn" onclick="setSectorPill('Healthcare', this)">Hospitals & Nursing</button>
+        <button class="sec-pill-btn" onclick="setSectorPill('Hospitality', this)">Hotels & Resorts</button>
+        <button class="sec-pill-btn" onclick="setSectorPill('Sales', this)">Corporate Sales</button>
       </div>
 
       <div class="jobs-feed-header">
@@ -402,18 +420,18 @@
           </div>
           <div class="f-job-info">
             <h3>${job.title}</h3>
-            <div class="f-job-company">🏢 ${job.company}</div>
+            <div class="f-job-company">${job.company}</div>
             <div class="f-job-meta-row">
-              <span>📍 ${job.location}</span>
-              <span class="f-salary-tag">💰 ${job.salary}</span>
-              <span>💼 ${job.type}</span>
-              <span>🎓 ${!job.exp ? 'Experience as per role' : job.exp === 'Fresher' ? 'Freshers Eligible' : job.exp + ' Years Experience'}</span>
+              <span>${job.location}</span>
+              <span class="f-salary-tag">${job.salary}</span>
+              <span>${job.type}</span>
+              <span>${!job.exp ? 'Experience as per role' : job.exp === 'Fresher' ? 'Freshers Eligible' : job.exp + ' Years Experience'}</span>
             </div>
             <p style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.4;">${job.description}</p>
           </div>
           <div>
             <button class="btn btn-primary-submit" onclick="applyJobDirect(${job.id})" style="white-space:nowrap;padding:10px 18px;">
-              Apply Now →
+              Apply now
             </button>
           </div>
         </article>
@@ -464,6 +482,7 @@
         b.classList.toggle('active', i === 0);
       });
       renderJobs(ALL_JOBS);
+      const allPill = document.getElementById('pill-all-jobs'); if (allPill) allPill.textContent = 'All jobs (' + ALL_JOBS.length + ')';
     }
 
     async function applyJobDirect(jobId) {
@@ -630,5 +649,6 @@
       </div>
     </div>
   </footer>
+<script src="theme.js" defer></script>
 </body>
 </html>

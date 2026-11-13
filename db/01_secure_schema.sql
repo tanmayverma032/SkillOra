@@ -193,6 +193,13 @@ create policy leads_update on public.admission_leads for update to authenticated
 -- ---------- 5. JOB APPLICATIONS ---------------------------------------
 alter table public.job_applications add column if not exists user_id uuid references auth.users(id) on delete set null;
 alter table public.job_applications add column if not exists updated_at timestamptz not null default now();
+alter table public.job_applications add column if not exists current_city text;
+alter table public.job_applications add column if not exists current_state text;
+alter table public.job_applications add column if not exists work_status text;
+alter table public.job_applications add column if not exists preferred_location text;
+alter table public.job_applications add column if not exists sector text;
+alter table public.job_applications add column if not exists target_role text;
+alter table public.job_applications add column if not exists qualification text;
 drop trigger if exists trg_apps_updated on public.job_applications;
 create trigger trg_apps_updated before update on public.job_applications
   for each row execute function public.set_updated_at();
@@ -208,8 +215,8 @@ drop policy if exists apps_insert on public.job_applications;
 drop policy if exists apps_select on public.job_applications;
 drop policy if exists apps_update on public.job_applications;
 -- Applying requires a logged-in student; one application per job per user.
-create policy apps_insert on public.job_applications for insert to authenticated
-  with check (user_id = auth.uid() and stage = 'Applied');
+create policy apps_insert on public.job_applications for insert to anon, authenticated
+  with check (stage = 'Applied' and (user_id is null or user_id = auth.uid()));
 create unique index if not exists apps_one_per_job_uidx on public.job_applications (job_id, user_id) where user_id is not null;
 create policy apps_select on public.job_applications for select to authenticated
   using ( public.is_admin() or user_id = auth.uid()
@@ -267,8 +274,8 @@ drop policy if exists resumes_select_own on storage.objects;
 drop policy if exists resumes_update_own on storage.objects;
 drop policy if exists resumes_delete_own on storage.objects;
 -- files live at  <user-id>/<timestamp>_<name>
-create policy resumes_insert_own on storage.objects for insert to authenticated
-  with check (bucket_id = 'resumes' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy resumes_insert_own on storage.objects for insert to anon, authenticated
+  with check (bucket_id = 'resumes');
 create policy resumes_select_own on storage.objects for select to authenticated
   using (bucket_id = 'resumes' and ((storage.foldername(name))[1] = auth.uid()::text or public.is_admin()));
 create policy resumes_update_own on storage.objects for update to authenticated
@@ -279,7 +286,7 @@ create policy resumes_delete_own on storage.objects for delete to authenticated
 -- ---------- 9. LEAST PRIVILEGE ----------------------------------------
 revoke all on all tables in schema public from anon;
 grant select on public.colleges, public.jobs to anon;
-grant insert on public.admission_leads, public.contact_inquiries to anon;
+grant insert on public.admission_leads, public.contact_inquiries, public.job_applications to anon;
 grant usage, select on all sequences in schema public to anon, authenticated;
 grant select, insert, update, delete on all tables in schema public to authenticated; -- RLS still gates every row
 

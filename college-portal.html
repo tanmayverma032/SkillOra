@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
   <script src="data/config.js"></script>
   <script src="data/auth_db.js"></script>
   <style>
@@ -187,7 +189,7 @@
       flex-shrink: 0;
     }
     .stat-ic-green { background: #EDFDF5; color: #0FA66D; }
-    .stat-ic-blue { background: #EDF8FF; color: #087BFF; }
+    .stat-ic-blue { background: #EDF8FF; color: #0A68DC; }
     .stat-ic-orange { background: #FEF6EC; color: #FF922A; }
     .stat-ic-purple { background: #F5EEFD; color: #7756C4; }
 
@@ -291,7 +293,7 @@
       display: inline-block;
     }
     .pill-green { background: #EDFDF5; color: #0FA66D; }
-    .pill-blue { background: #EDF8FF; color: #087BFF; }
+    .pill-blue { background: #EDF8FF; color: #0A68DC; }
     .pill-orange { background: #FEF6EC; color: #FF922A; }
 
     /* Courses Grid */
@@ -818,7 +820,7 @@
           <p style="font-size:12px;color:#728DA9;margin-bottom:10px;">${crs.duration}</p>
           <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;">
             <span>Annual Tuition Fee:</span>
-            <strong style="color:#087BFF;">${crs.fee}</strong>
+            <strong style="color:#0A68DC;">${crs.fee}</strong>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:12px;">
             <span>Total Intake Capacity:</span>
@@ -869,11 +871,11 @@
 
       tbody.innerHTML = list.map((lead, idx) => `
         <tr>
-          <td><strong style="color:#087BFF;">#${lead.id}</strong></td>
+          <td><strong style="color:#0A68DC;">#${lead.id}</strong></td>
           <td><strong>${lead.name}</strong></td>
           <td>${lead.qualification || '—'}</td>
           <td><strong>${lead.course}</strong></td>
-          <td><a href="tel:${lead.phone}" style="color:#087BFF;text-decoration:none;font-weight:700;">📱 ${lead.phone}</a></td>
+          <td><a href="tel:${lead.phone}" style="color:#0A68DC;text-decoration:none;font-weight:700;">📱 ${lead.phone}</a></td>
           <td>${lead.location || '—'}</td>
           <td>${lead.date || '—'}</td>
           <td><span class="pill-status ${lead.stage.includes('Seat') || lead.stage.includes('Admitted') ? 'pill-green' : lead.stage.includes('Contacted') ? 'pill-blue' : 'pill-orange'}">${lead.stage}</span></td>
@@ -1016,5 +1018,6 @@
       await loadCollegeData();
     };
   </script>
+<script src="theme.js" defer></script>
 </body>
 </html>

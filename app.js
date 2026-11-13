@@ -229,7 +229,7 @@ function initSearchEngine() {
       <div class="ac-top-summary">
         <div class="ac-top-summary-text">
           <span class="ac-summary-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#087BFF" stroke-width="2.5"/><path d="M21 21L16.65 16.65" stroke="#087BFF" stroke-width="2.5" stroke-linecap="round"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#0A68DC" stroke-width="2.5"/><path d="M21 21L16.65 16.65" stroke="#0A68DC" stroke-width="2.5" stroke-linecap="round"/></svg>
           </span>
           <span>Found <strong>${totalMatches}</strong> results for &ldquo;<strong>${escapeHtml(val)}</strong>&rdquo;</span>
         </div>
@@ -238,7 +238,7 @@ function initSearchEngine() {
     `;
 
     if (collegeMatches.length > 0) {
-      html += `<div class="ac-group-header">🎓 Colleges & Institutes (${collegeMatches.length})</div>`;
+      html += `<div class="ac-group-header">Colleges & institutes (${collegeMatches.length})</div>`;
       html += collegeMatches.map(m => `
         <a class="autocomplete-item" href="${m.url}">
           <div class="ac-main-col">
@@ -264,7 +264,7 @@ function initSearchEngine() {
     }
 
     if (jobMatches.length > 0) {
-      html += `<div class="ac-group-header">💼 Verified Jobs & Openings (${jobMatches.length})</div>`;
+      html += `<div class="ac-group-header">Verified jobs & openings (${jobMatches.length})</div>`;
       html += jobMatches.map(m => `
         <a class="autocomplete-item" href="${m.url}">
           <div class="ac-main-col">
@@ -546,14 +546,14 @@ function renderCatalogPage() {
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span>${c.approval || 'Verified Institute'}</span>
           </span>
-          <span class="campus-photo-tag">📍 Verified Campus</span>
+          <span class="campus-photo-tag"><i class="ic ic-pin"></i> Verified Campus</span>
         </div>
         <div class="course-body">
           <h3 class="course-title" title="${primaryCourse.name}">${primaryCourse.name}</h3>
           
           <div class="course-meta-tags-row">
             <span class="course-duration-tag">
-              <span class="meta-icon">⏱️</span> ${primaryCourse.duration}
+              <span class="meta-icon"><i class="ic ic-clock"></i></span> ${primaryCourse.duration}
             </span>
             <span class="course-fee-tag">
               ${c.minFeeDisplay}
@@ -561,12 +561,12 @@ function renderCatalogPage() {
           </div>
 
           <div class="course-location-row" title="${c.city}, ${c.state}">
-            <span class="loc-pin">📍</span>
+            <span class="loc-pin"><i class="ic ic-pin"></i></span>
             <span class="loc-text">${c.city}, ${c.state}</span>
           </div>
 
           <div class="course-provider" title="${c.name}">
-            <span class="inst-icon">🏛️</span>
+            <span class="inst-icon"><i class="ic ic-building"></i></span>
             <span class="inst-name">${c.cleanName || c.name}</span>
           </div>
           
@@ -625,7 +625,7 @@ function openCollegeModal(collegeId) {
   document.getElementById('modal-rating-pill').textContent = (college.rating ? `★ ${college.rating} / 5` : '');
   document.getElementById('modal-approval-badge').textContent = college.approval || 'Verified Institute';
   document.getElementById('modal-course-title').textContent = college.name;
-  document.getElementById('modal-course-institute').textContent = `${college.city}, ${college.state} • Est. ${college.established || 2012}`;
+  document.getElementById('modal-course-institute').textContent = `${college.city}, ${college.state}${college.established ? ' • Est. ' + college.established : ''}`;
 
   // Tab 1: Overview
   const pCourse = college.courses[0] || { duration: "3 Years", feeDisplay: college.minFeeDisplay, mode: "Offline" };
@@ -739,8 +739,8 @@ function updateFormCourseHighlight(course) {
   const durEl = document.getElementById('highlight-course-duration');
   const feeEl = document.getElementById('highlight-course-fee');
   if (nameEl) nameEl.textContent = course.name;
-  if (durEl) durEl.textContent = `⏱️ ${course.duration || 'Flexible'}`;
-  if (feeEl) feeEl.textContent = `💰 ${course.feeDisplay || course.fee || '₹ 45,000'} / Year`;
+  if (durEl) durEl.textContent = course.duration || 'Flexible';
+  if (feeEl) feeEl.textContent = (course.feeDisplay || (course.fee ? '₹ ' + Number(course.fee).toLocaleString('en-IN') : 'Fee on request')) + ' / year';
 }
 
 function applyDirectCourse(courseName) {
@@ -889,10 +889,10 @@ function downloadApplicationSlip() {
       <title>SkillOra - Official Admission Application Slip (${app.refId})</title>
       <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 30px; color: #173C62; line-height: 1.5; }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #087BFF; padding-bottom: 15px; margin-bottom: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0A68DC; padding-bottom: 15px; margin-bottom: 20px; }
         .logo { font-size: 24px; font-weight: 800; color: #173C62; }
         .logo span { color: #FF922A; }
-        .badge { background: #EDF8FF; color: #087BFF; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; }
+        .badge { background: #EDF8FF; color: #0A68DC; padding: 4px 10px; border-radius: 4px; font-weight: 700; font-size: 12px; }
         .table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 20px; }
         .table td { padding: 10px 12px; border-bottom: 1px solid #E5F0F9; font-size: 14px; }
         .table td:first-child { font-weight: 600; color: #728DA9; width: 35%; }
@@ -908,7 +908,7 @@ function downloadApplicationSlip() {
       </div>
       <h3>Direct Admission Registration Acknowledgment</h3>
       <table class="table">
-        <tr><td>Reference ID</td><td style="color:#087BFF;">${app.refId}</td></tr>
+        <tr><td>Reference ID</td><td style="color:#0A68DC;">${app.refId}</td></tr>
         <tr><td>Registration Date</td><td>${app.date}</td></tr>
         <tr><td>Student Full Name</td><td>${app.studentName}</td></tr>
         <tr><td>Mobile Number</td><td>${app.phone}</td></tr>
@@ -1168,11 +1168,17 @@ function checkAuthStatus() {
   const _c = window.SkillOraAuth.getCurrentUser('college'); const college = _c ? JSON.stringify(_c) : null;
   const _e = window.SkillOraAuth.getCurrentUser('employer'); const employer = _e ? JSON.stringify(_e) : null;
 
+  const setLoginLabel = (long, short) => {
+    // keeps the long (desktop) and short (mobile) labels so the header never overflows on phones
+    loginBtn.innerHTML = '<span class="desktop-auth-text"></span><span class="mobile-auth-text"></span>';
+    loginBtn.querySelector('.desktop-auth-text').textContent = long;
+    loginBtn.querySelector('.mobile-auth-text').textContent = short;
+  };
   if (loginBtn) {
     if (student) {
       try {
         const u = JSON.parse(student);
-        loginBtn.textContent = `Student (${u.name ? u.name.split(' ')[0] : 'Profile'})`;
+        setLoginLabel(`Student (${u.name ? u.name.split(' ')[0] : 'Profile'})`, 'My account');
         loginBtn.href = 'dashboard.html';
         loginBtn.style.color = '#0FA66D';
         loginBtn.style.borderColor = '#0FA66D';
@@ -1180,10 +1186,10 @@ function checkAuthStatus() {
         loginBtn.href = 'dashboard.html';
       }
     } else {
-      loginBtn.textContent = 'Student Login / Sign Up';
+      setLoginLabel('Student Login / Sign Up', 'Login');
       loginBtn.href = 'auth.html?role=student';
-      loginBtn.style.color = '#087BFF';
-      loginBtn.style.borderColor = '#087BFF';
+      loginBtn.style.color = '#0A68DC';
+      loginBtn.style.borderColor = '#0A68DC';
     }
   }
 
@@ -1229,8 +1235,8 @@ function openInfoModal(type) {
       html: `
         <p style="margin-bottom:12px;color:var(--text-dark);">We are here to assist learners, educational institutes, and corporate employers 7 days a week.</p>
         <div style="background:#F3F9FE;padding:12px 14px;border-radius:8px;font-size:12.5px;display:flex;flex-direction:column;gap:8px;border:1px solid #D5E8FA;margin-bottom:14px;">
-          <div>📍 <strong>Corporate Office:</strong> V3S Mall, Nirman Vihar, Delhi - 110092</div>
-          <div>📞 <strong>Student Helpline:</strong> ${SUPPORT_PHONE_TXT} (Toll Free, 9 AM - 8 PM IST)</div>
+          <div><i class="ic ic-pin"></i> <strong>Corporate Office:</strong> V3S Mall, Nirman Vihar, Delhi - 110092</div>
+          <div><i class="ic ic-phone"></i> <strong>Student Helpline:</strong> ${SUPPORT_PHONE_TXT} (Toll Free, 9 AM - 8 PM IST)</div>
           <div>✉️ <strong>General Inquiries:</strong> support@skilloraindia.com</div>
           <div>🏫 <strong>Institute Partnerships:</strong> admissions@skilloraindia.com</div>
           <div>💬 <strong>WhatsApp Helpline:</strong> ${SUPPORT_PHONE_TXT}</div>
@@ -1238,7 +1244,7 @@ function openInfoModal(type) {
         <div>
           <div style="font-size:12.5px;font-weight:700;color:var(--text-dark);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
             <span>🗺️ Location Map (V3S Mall, Nirman Vihar, Delhi)</span>
-            <a href="https://maps.google.com/?q=V3S+Mall+Nirman+Vihar+Delhi" target="_blank" rel="noopener" style="font-size:11.5px;color:#087BFF;text-decoration:none;font-weight:600;">Open Map ↗</a>
+            <a href="https://maps.google.com/?q=V3S+Mall+Nirman+Vihar+Delhi" target="_blank" rel="noopener" style="font-size:11.5px;color:#0A68DC;text-decoration:none;font-weight:600;">Open Map ↗</a>
           </div>
           <div style="border-radius:8px;overflow:hidden;border:1px solid #DCE6F1;background:#EBF2F7;">
             <iframe 
@@ -1366,7 +1372,7 @@ function showToast(message, isSuccess = false) {
   const toast = document.createElement('div');
   toast.className = `toast ${isSuccess ? 'toast-success' : ''}`;
   toast.innerHTML = `
-    <span>${isSuccess ? '✔' : 'ℹ'}</span>
+    <span><i class="ic ${isSuccess ? 'ic-check' : 'ic-info'}"></i></span>
     <span>${message}</span>
   `;
 
@@ -1448,22 +1454,22 @@ async function initLiveHome() {
           <div class="job-info-col">
             <h3 class="job-title">${j.title}</h3>
             <div class="job-company">${j.company}</div>
-            ${j.location ? `<div class="job-location">📍 ${j.location}</div>` : ''}
+            ${j.location ? `<div class="job-location">${j.location}</div>` : ''}
             <div class="job-salary-row">
-              ${j.salary ? `<span class="job-salary">💰 ${j.salary}</span>` : ''}
-              <span class="job-type-badge">💼 ${j.type}</span>
+              ${j.salary ? `<span class="job-salary">${j.salary}</span>` : ''}
+              <span class="job-type-badge">${j.type}</span>
             </div>
           </div>
-          <div class="job-action-col"><button class="btn btn-apply-job" onclick="window.location.href='jobs.html?jobId=${Number(j.id)}'">Apply Now</button></div>
+          <div class="job-action-col"><button class="btn btn-apply-job" onclick="window.location.href='jobs.html?jobId=${Number(j.id)}'">Apply now</button></div>
         </article>`).join('');
   }
 
   // Latest updates (built from real data only)
   const fmt = (iso) => iso ? new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
   const items = [
-    ...jobs.slice(0, 3).map(j => ({ tag: 'Hiring', cls: 'cat-hospital', title: `${j.title} - ${j.company}`, sub: [j.location, j.salary].filter(Boolean).join(' • '), date: j.postedAt, href: `jobs.html?jobId=${Number(j.id)}`, cta: 'View vacancy →' })),
+    ...jobs.slice(0, 3).map(j => ({ tag: 'Hiring', cls: 'cat-hospital', title: `${j.title} - ${j.company}`, sub: [j.location, j.salary].filter(Boolean).join(' • '), date: j.postedAt, href: `jobs.html?jobId=${Number(j.id)}`, cta: 'View vacancy' })),
     ...colleges.filter(c => c.createdAt).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3)
-      .map(c => ({ tag: 'New college', cls: 'cat-nursing', title: c.name, sub: [c.city, c.state].filter(Boolean).join(', '), date: c.createdAt, href: `colleges.html?collegeId=${Number(c.id)}`, cta: 'View college →' }))
+      .map(c => ({ tag: 'New college', cls: 'cat-nursing', title: c.name, sub: [c.city, c.state].filter(Boolean).join(', '), date: c.createdAt, href: `colleges.html?collegeId=${Number(c.id)}`, cta: 'View college' }))
   ].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
 
   const list = document.getElementById('bulletin-list');
@@ -1484,7 +1490,7 @@ async function initLiveHome() {
   if (track) {
     track.innerHTML = items.map(i => `
       <div class="top-ticker-item" onclick="window.location.href='${i.href}'" role="button" tabindex="0">
-        <span class="t-tag t-tag-green">${i.tag.toUpperCase()}</span><span class="t-text">${i.title}</span>
+        <span class="t-tag t-tag-green">${i.tag}</span><span class="t-text">${i.title}</span>
         <span class="t-date">${fmt(i.date)}</span><span class="t-arrow">${i.cta}</span>
       </div>`).join('');
   }

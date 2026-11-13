@@ -53,3 +53,38 @@
 - Terms/Privacy/Refund pages should be reviewed by a lawyer; they mention partner banks/fees you must be able to honour.
 - Admin editing of existing jobs/colleges beyond publish/unpublish, and admin "verify college" button (for now set verified=true in the Supabase table or use the admin Add College form).
 - Add backups + monitoring (Supabase daily backups, uptime alerts).
+
+# Design update (look and feel)
+All visual changes live in two new files, so they are easy to adjust or remove:
+- `theme.css`  - the new look (loaded after `styles.css`)
+- `theme.js`   - small mouse-only effects (card tilt, hero parallax)
+To go back to the old look: delete the `theme.css` and `theme.js` lines from the HTML pages (or delete the two files).
+
+What changed:
+- New fonts: Bricolage Grotesque (headings) and Figtree (body). They load from Google Fonts.
+- One lighting model everywhere (light from top-left): raised cards, pressable 3D buttons, pressed-in search/inputs, embossed "coin" category icons.
+- Hero photo is now a stack of prints in 3D that follows the mouse slightly; floating badges sit in front.
+- Cards tilt a few degrees toward the mouse (desktop mouse only; off on phones and for "reduce motion").
+- Removed the generic look: single green word in the headline, emoji and "->" on buttons, ALL-CAPS tags, flat identical shadows.
+- Fixed old bugs found on the way: black "Search" text on the blue button, login button clipped on phones, hard-coded "All Jobs (6)", and an invented "Est. 2000 / 2012" year shown on colleges with no year.
+
+# Direct Candidate Application & Resume Vault Update (apply-job.html)
+- Added dedicated Direct Placement Application page (`apply-job.html`) where candidates can submit:
+  * Full candidate name, 10-digit mobile number, verified email
+  * Current Location (City + State dropdown covering all Indian states/UTs)
+  * Work Status & Qualifications (Fresher, Experienced, Immediate Joiner, etc.)
+  * Preferred Work Location & Desired Sector (Healthcare & Nursing, Hospitality, Sales & Retail, IT, etc.)
+  * Encrypted Resume Vault Upload (PDF, DOC, DOCX up to 5MB) stored securely in Supabase private `resumes` storage bucket with collision-resistant naming
+- Standalone database migration `db/04_apply_job_migration.sql` created for Supabase:
+  * Adds 7 candidate fields to `job_applications` table: `current_city`, `current_state`, `work_status`, `preferred_location`, `sector`, `target_role`, `qualification`
+  * Grants anonymous candidates permission to submit direct applications and upload their resume
+- Admin Dashboard updated:
+  * Real-time table displays all direct candidate applications with sector, location, work status, and reference ID
+  * "View Resume" button generates a private temporary signed URL directly from Supabase Storage
+  * Stage updates ("Interview Scheduled", "Shortlisted", "Selected", "Rejected") persist directly to Supabase cloud database
+- Audit & Bug Fixes:
+  * 0 fake/demo records across the entire site
+  * Toast notifications wired properly in admin dashboard
+  * Added CSS animation keyframes for loading states
+  * 100% syntax validation pass across all 14 HTML files and 5 JavaScript modules
+

@@ -310,6 +310,165 @@
     return url;
   }
 
+  /* ---------------- direct candidate resumes & applications ---------------- */
+  async function uploadDirectCandidateResume(file, optionalUser) {
+    if (!file) return { success: false, message: 'No resume file selected.' };
+    if (file.size > 5 * 1024 * 1024) return { success: false, message: 'File is larger than 5 MB.' };
+    if (!ALLOWED_RESUME[file.type]) return { success: false, message: 'Only PDF, DOC or DOCX files are allowed.' };
+
+    const u = optionalUser || getCurrentUser('student');
+    const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(-80);
+    const folder = u && u.id ? u.id : 'direct_applications';
+    const randTag = Math.random().toString(36).slice(2, 8);
+    const path = `${folder}/${Date.now()}_${randTag}_${safe}`;
+
+    try {
+      const up = await api(`${STORAGE}/object/resumes/${path.split('/').map(encodeURIComponent).join('/')}`, {
+        method: 'POST',
+        body: file,
+        headers: { 'Content-Type': file.type, 'x-upsert': 'false' }
+      });
+      if (!up.ok) {
+        return { success: false, message: 'Could not upload resume to secure storage (status ' + up.status + ').' };
+      }
+
+      // If user is signed in as student, update their profile resume as well
+      if (u && u.id) {
+        const meta = { resume_path: path, resume_name: file.name.slice(0, 200), resume_size: prettySize(file.size), resume_uploaded_at: nowIso() };
+        api(`${REST}/profiles?id=eq.${encodeURIComponent(u.id)}`, { method: 'PATCH', body: meta, headers: { Prefer: 'return=minimal' } }).catch(() => {});
+        const url = await signedResumeUrl(path);
+        const updated = { ...u, resumePath: path, resumeName: meta.resume_name, resumeUrl: url, resumeSize: meta.resume_size, resumeDate: prettyDate(meta.resume_uploaded_at) };
+        localStorage.setItem(KEYS.student, JSON.stringify(updated));
+      }
+
+      return { success: true, path, name: file.name, size: prettySize(file.size) };
+    } catch (e) {
+      return { success: false, message: 'Network error uploading resume. Please try again.' };
+    }
+  }
+
+  async function submitDirectJobApplication(d) {
+    const user = getCurrentUser('student');
+    const candName = String(d.name || d.candidateName || '').trim();
+    const phone = String(d.phone || '').trim();
+    const email = (d.email || (user && user.email) || '').trim().toLowerCase();
+    const currentCity = String(d.currentCity || '').trim();
+    const currentState = String(d.currentState || '').trim();
+    const workStatus = String(d.workStatus || '').trim();
+    const preferredLocation = String(d.preferredLocation || '').trim();
+    const sector = String(d.sector || '').trim();
+    const targetRole = String(d.targetRole || '').trim();
+    const qualification = String(d.qualification || '').trim();
+    const experience = String(d.experience || '').trim();
+    const refId = d.refId || `SKL-APP-${Math.floor(10000 + Math.random() * 90000)}`;
+
+    if (!candName || candName.length < 2) return { success: false, message: 'Please enter your full name.' };
+    if (!/^\+?\d{10,15}$/.test(phone.replace(/[\s-]/g, ''))) return { success: false, message: 'Please enter a valid 10-digit mobile number.' };
+    if (!isEmail(email)) return { success: false, message: 'Please enter a valid email address.' };
+
+    let resumePath = d.resumePath || (user && user.resumePath) || null;
+    let resumeName = d.resumeName || (user && user.resumeName) || null;
+
+    if (d.resumeFile && d.resumeFile instanceof File) {
+      const upRes = await uploadDirectCandidateResume(d.resumeFile, user);
+      if (!upRes.success) {
+        return { success: false, message: upRes.message || 'Failed to upload resume to secure storage.' };
+      }
+      resumePath = upRes.path;
+      resumeName = upRes.name;
+    }
+
+    const structuredNotes = [
+      `Ref: ${refId}`,
+      `Direct Candidate Application`,
+      `Sector: ${sector || 'General'}`,
+      targetRole ? `Role: ${targetRole}` : '',
+      workStatus ? `Work Status: ${workStatus}` : '',
+      (currentCity || currentState) ? `Current Location: ${[currentCity, currentState].filter(Boolean).join(', ')}` : '',
+      preferredLocation ? `Preferred Location: ${preferredLocation}` : '',
+      qualification ? `Education: ${qualification}` : '',
+      experience ? `Exp: ${experience}` : '',
+      d.notes ? `Candidate Note: ${d.notes}` : ''
+    ].filter(Boolean).join(' | ');
+
+    const payload = {
+      job_id: d.jobId ? Number(d.jobId) : null,
+      candidate_name: candName,
+      phone: phone,
+      email: email,
+      experience_years: experience || workStatus || null,
+      resume_path: resumePath,
+      stage: 'Applied',
+      recruiter_notes: structuredNotes,
+      user_id: user ? user.id : null,
+      current_city: currentCity || null,
+      current_state: currentState || null,
+      work_status: workStatus || null,
+      preferred_location: preferredLocation || null,
+      sector: sector || null,
+      target_role: targetRole || null,
+      qualification: qualification || null
+    };
+
+    try {
+      const res = await api(`${REST}/job_applications`, {
+        method: 'POST',
+        headers: { Prefer: 'return=minimal' },
+        body: payload
+      });
+
+      if (!res.ok) {
+        // Fallback: If database table has not yet run v3 migration, retry with base columns
+        delete payload.current_city;
+        delete payload.current_state;
+        delete payload.work_status;
+        delete payload.preferred_location;
+        delete payload.sector;
+        delete payload.target_role;
+        delete payload.qualification;
+
+        const res2 = await api(`${REST}/job_applications`, {
+          method: 'POST',
+          headers: { Prefer: 'return=minimal' },
+          body: payload
+        });
+
+        if (!res2.ok) {
+          return { success: false, message: 'Could not record application in database. Please check your network and try again.' };
+        }
+      }
+
+      // Also cache in local session for student dashboard
+      if (user) {
+        try {
+          const apps = JSON.parse(localStorage.getItem('SKILLORA_ALL_JOB_APPLICATIONS') || '[]');
+          apps.unshift({
+            refId,
+            jobTitle: targetRole || (sector ? sector + ' Placement' : 'Direct Candidate Application'),
+            company: 'SkillOra Verified Placement',
+            location: preferredLocation || [currentCity, currentState].filter(Boolean).join(', ') || 'Pan-India',
+            name: candName,
+            phone,
+            email,
+            date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+            status: 'Applied',
+            statusClass: 'status-applied'
+          });
+          localStorage.setItem('SKILLORA_ALL_JOB_APPLICATIONS', JSON.stringify(apps));
+        } catch(e) {}
+      }
+
+      return {
+        success: true,
+        refId,
+        message: 'Your job application and resume have been securely received by SkillOra Career Placements.',
+        resumePath
+      };
+    } catch (e) {
+      return { success: false, message: 'Network error submitting application. Please try again.' };
+    }
+  }
+
   /* ---------------- leads & applications ---------------- */
   async function submitAdmissionToCloud(d) {
     const user = getCurrentUser('student');
@@ -421,8 +580,9 @@
   async function fetchMyApplicants() {         // RLS: only applicants of jobs owned by this employer
     const rows = await getList('job_applications?select=*,jobs(title,employer_id)&order=applied_at.desc&limit=500');
     return rows.map(a => ({
-      id: a.id, jobId: a.job_id, name: E(a.candidate_name), phone: E(a.phone), email: E(a.email || ''), role: E((a.jobs && a.jobs.title) || ''),
-      exp: E(a.experience_years || ''), stage: E(a.stage || 'Applied'), appliedAt: a.applied_at, resumePath: a.resume_path || null
+      id: a.id, jobId: a.job_id, name: E(a.candidate_name), phone: E(a.phone), email: E(a.email || ''),
+      role: E((a.jobs && a.jobs.title) || a.target_role || (a.sector ? a.sector + ' Placement' : 'Direct Placement Candidate')),
+      exp: E(a.experience_years || a.work_status || '—'), stage: E(a.stage || 'Applied'), appliedAt: a.applied_at, resumePath: a.resume_path || null
     }));
   }
   async function getApplicantResumeLink(path) { return signedResumeUrl(path, 600); }
@@ -441,9 +601,14 @@
     if (!getCurrentUser('student')) return [];
     const rows = await getList('job_applications?select=*,jobs(title,employer_name,salary_display,location_city,location_state)&order=applied_at.desc&limit=200');
     return rows.map(x => ({
-      id: x.id, role: E((x.jobs && x.jobs.title) || ''), company: E((x.jobs && x.jobs.employer_name) || ''), salary: E((x.jobs && x.jobs.salary_display) || ''),
-      location: E(x.jobs ? [x.jobs.location_city, x.jobs.location_state].filter(Boolean).join(', ') : ''), stage: E(x.stage || 'Applied'), appliedAt: x.applied_at,
-      ref: E(((x.recruiter_notes || '').match(/Ref:\s*([^\s-]+)/) || [])[1] || '')
+      id: x.id,
+      role: E((x.jobs && x.jobs.title) || x.target_role || (x.sector ? x.sector + ' Placement' : 'Direct Placement Application')),
+      company: E((x.jobs && x.jobs.employer_name) || 'SkillOra Placement Network'),
+      salary: E((x.jobs && x.jobs.salary_display) || (x.work_status ? 'Status: ' + x.work_status : '—')),
+      location: E(x.jobs ? [x.jobs.location_city, x.jobs.location_state].filter(Boolean).join(', ') : (x.preferred_location || [x.current_city, x.current_state].filter(Boolean).join(', ') || 'Pan-India')),
+      stage: E(x.stage || 'Applied'),
+      appliedAt: x.applied_at,
+      ref: E(((x.recruiter_notes || '').match(/Ref:\s*([^\s|]+)/) || [])[1] || '')
     }));
   }
 
@@ -506,7 +671,7 @@
 
   window.SkillOraAuth = {
     registerUser, authenticateUser, signOut, getCurrentUser, getActiveRole, setExclusiveSession, enforceExclusiveRole, requireLoginToApply,
-    saveStudentProfile, saveCollegeProfile, saveEmployerProfile, uploadResumeFile, refreshResumeLink,
+    saveStudentProfile, saveCollegeProfile, saveEmployerProfile, uploadResumeFile, uploadDirectCandidateResume, refreshResumeLink, submitDirectJobApplication,
     submitAdmissionToCloud, submitJobApplicationToCloud, submitContactInquiry,
     fetchStudentCloudAdmissions, fetchStudentCloudJobs, fetchCollegeCloudLeads, fetchEmployerCloudApplications,
     updateAdmissionLeadStatusInCloud, updateJobApplicationStageInCloud,

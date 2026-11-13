@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
   <script src="data/config.js"></script>
   <script src="data/auth_db.js"></script>
   <style>
@@ -46,7 +48,7 @@
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #087BFF 0%, #173C62 100%);
+      background: linear-gradient(135deg, #0A68DC 0%, #173C62 100%);
       color: #FFFFFF;
       display: flex;
       align-items: center;
@@ -98,7 +100,7 @@
     .progress-bar-fill {
       width: 85%;
       height: 100%;
-      background: linear-gradient(90deg, #087BFF, #0FA66D);
+      background: linear-gradient(90deg, #0A68DC, #0FA66D);
       border-radius: 4px;
     }
 
@@ -141,7 +143,7 @@
     }
     .dash-nav-badge {
       margin-left: auto;
-      background: #087BFF;
+      background: #0A68DC;
       color: #FFFFFF;
       font-size: 10.5px;
       padding: 1px 7px;
@@ -208,7 +210,7 @@
       font-size: 20px;
       flex-shrink: 0;
     }
-    .stat-ic-blue { background: #EDF8FF; color: #087BFF; }
+    .stat-ic-blue { background: #EDF8FF; color: #0A68DC; }
     .stat-ic-green { background: #EDFDF5; color: #0FA66D; }
     .stat-ic-orange { background: #FEF6EC; color: #FF922A; }
     .stat-ic-purple { background: #F5EEFD; color: #7756C4; }
@@ -258,7 +260,7 @@
       display: inline-block;
     }
     .status-under-review { background: #FFF9E6; color: #B8860B; }
-    .status-assigned { background: #EDF8FF; color: #087BFF; }
+    .status-assigned { background: #EDF8FF; color: #0A68DC; }
     .status-shortlisted { background: #EDFDF5; color: #0FA66D; }
 
     /* Resume Upload Card */
@@ -352,13 +354,13 @@
         border: 1px solid #E5F0F9;
       }
       .dash-nav-btn.active {
-        border-left: 1px solid #087BFF;
-        background: #087BFF;
+        border-left: 1px solid #0A68DC;
+        background: #0A68DC;
         color: #FFFFFF;
       }
       .dash-nav-btn.active .dash-nav-badge {
         background: #FFFFFF;
-        color: #087BFF;
+        color: #0A68DC;
       }
       .dash-stats-grid {
         grid-template-columns: 1fr 1fr;
@@ -391,7 +393,7 @@
       <a href="index.html" class="brand-logo" aria-label="SkillOra Home">
         <div class="logo-mark">
           <svg class="logo-symbol" viewBox="0 0 38 38" fill="none">
-            <rect width="38" height="38" rx="8" fill="#087BFF"/>
+            <rect width="38" height="38" rx="8" fill="#0A68DC"/>
             <path d="M10 26L19 12L28 26H10Z" fill="#FFFFFF"/>
             <circle cx="19" cy="18" r="3.5" fill="#FF922A"/>
           </svg>
@@ -427,20 +429,20 @@
         <div class="user-avatar-circle" id="user-avatar-initials">SU</div>
         <h2 class="user-name" id="user-name-display">Student User</h2>
         <span class="user-role-badge">Verified Student Account</span>
-        <p style="font-size:12px;color:var(--text-muted);margin-bottom:4px;" id="user-email-display">student@skillora.in</p>
-        <p style="font-size:12px;color:var(--text-muted);" id="user-phone-display">📱 Contact Verified</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:4px;" id="user-email-display"></p>
+        <p style="font-size:12px;color:var(--text-muted);" id="user-phone-display"></p>
 
         <!-- Profile Strength Meter -->
         <div class="profile-strength-box">
           <div class="strength-label-row">
             <span>Profile Completeness</span>
-            <span style="color:#0FA66D;">90%</span>
+            <span style="color:#0FA66D;" id="profile-strength-val">0%</span>
           </div>
           <div class="progress-bar-wrap">
-            <div class="progress-bar-fill"></div>
+            <div class="progress-bar-fill" id="profile-strength-bar" style="width:0%"></div>
           </div>
           <div style="font-size:10.5px;color:var(--text-muted);margin-top:6px;">
-            ✔ Resume Attached • ✔ Contact Verified
+            <span id="profile-checklist"></span>
           </div>
         </div>
       </div>
@@ -573,7 +575,7 @@
               <h3 class="dash-sec-title">All Course Admission Enquiries & Seat Locks</h3>
               <p class="dash-sec-sub">All direct admissions submitted through SkillOra are guaranteed institutional counseling within 2 hours.</p>
             </div>
-            <a href="colleges.html" class="btn btn-primary-submit" style="text-decoration:none;font-size:12.5px;">Browse 480+ Colleges →</a>
+            <a href="colleges.html" class="btn btn-primary-submit" style="text-decoration:none;font-size:12.5px;">Browse Colleges →</a>
           </div>
 
           <div class="dash-table-wrap">
@@ -640,7 +642,7 @@
           </div>
 
           <!-- Upload Progress / Status Indicator -->
-          <div id="resume-upload-status" style="display:none;padding:12px 16px;background:#EBF5FF;border:1px solid #B9DAFB;border-radius:8px;margin-bottom:12px;font-size:12.5px;color:#087BFF;font-weight:700;">
+          <div id="resume-upload-status" style="display:none;padding:12px 16px;background:#EBF5FF;border:1px solid #B9DAFB;border-radius:8px;margin-bottom:12px;font-size:12.5px;color:#0A68DC;font-weight:700;">
             ⏳ Uploading resume file to your private cloud storage...
           </div>
 
@@ -819,6 +821,10 @@
       
       const initials = (user.name || "?").split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
       document.getElementById('user-avatar-initials').textContent = initials;
+      const emailEl = document.getElementById('user-email-display');
+      const phoneEl = document.getElementById('user-phone-display');
+      if (emailEl) emailEl.textContent = user.email || '';
+      if (phoneEl) phoneEl.textContent = user.phone ? '📱 ' + user.phone : '';
 
       // 2. Real Resume State Handling (No fake placeholders)
       const emptyState = document.getElementById('resume-empty-state');
@@ -865,6 +871,18 @@
       if (strengthVal) strengthVal.textContent = `${displayScore}%`;
       if (strengthBar) strengthBar.style.width = `${displayScore}%`;
 
+      // Update checklist text based on real state
+      const checklist = document.getElementById('profile-checklist');
+      if (checklist) {
+        const checks = [];
+        if (hasResume) checks.push('✔ Resume Attached');
+        if (user.phone && user.phone.trim()) checks.push('✔ Contact Verified');
+        if (user.qualification) checks.push('✔ Qualification Added');
+        if (!hasResume) checks.push('⚠ Resume missing — upload to reach 100%');
+        checklist.textContent = checks.join(' • ');
+        checklist.style.color = hasResume ? 'var(--text-muted)' : '#E67E22';
+      }
+
       // Populate Profile Edit Form
       if (document.getElementById('edit-name')) document.getElementById('edit-name').value = user.name || "";
       if (document.getElementById('edit-phone')) document.getElementById('edit-phone').value = user.phone || "";
@@ -873,7 +891,7 @@
       if (document.getElementById('edit-state')) document.getElementById('edit-state').value = user.state || "";
       if (document.getElementById('edit-qualification')) document.getElementById('edit-qualification').value = user.qualification || "";
       if (document.getElementById('edit-sector')) document.getElementById('edit-sector').value = user.sector || "";
-      const emailEl = document.getElementById('edit-email'); if (emailEl) emailEl.readOnly = true;   // email is your login ID
+      const editEmailEl = document.getElementById('edit-email'); if (editEmailEl) editEmailEl.readOnly = true;   // email is your login ID
 
       // 3. Load Real Applications from Supabase Cloud and Local Cache
       await renderAdmissionsTables();
@@ -906,7 +924,7 @@
         return;
       }
 
-      const refCell = (r) => `<td><strong style="color:#087BFF;">${r}</strong></td>`;
+      const refCell = (r) => `<td><strong style="color:#0A68DC;">${r}</strong></td>`;
       const overviewHtml = merged.map(adm => `
           <tr>${refCell(adm.ref || ('#' + adm.id))}
             <td style="font-weight:700;">${adm.college || '—'}</td>
@@ -941,7 +959,10 @@
               <div style="font-size:32px;margin-bottom:8px;">💼</div>
               <strong style="color:var(--color-navy-dark);font-size:14px;">No Job Applications Submitted Yet</strong>
               <p style="font-size:12.5px;margin:6px 0 14px 0;">You have not applied to any job openings yet. Browse verified openings across hospitals and luxury hotels.</p>
-              <a href="jobs.html" class="btn btn-primary-submit" style="display:inline-block;padding:7px 16px;font-size:12px;text-decoration:none;">Search Verified Hospital & Hotel Vacancies →</a>
+              <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                <a href="apply-job.html" class="btn btn-primary-submit" style="display:inline-block;padding:7px 16px;font-size:12px;text-decoration:none;">⚡ Fast-Track Direct Job Application →</a>
+                <a href="jobs.html" class="btn" style="display:inline-block;padding:7px 16px;font-size:12px;text-decoration:none;background:#F1F5F9;color:#334155;border:1px solid #CBD5E1;">Browse Verified Vacancies</a>
+              </div>
             </td>
           </tr>
         `;
@@ -952,7 +973,7 @@
         return;
       }
 
-      const jref = (j) => `<td><strong style="color:#087BFF;">${j.ref || ('#' + j.id)}</strong></td>`;
+      const jref = (j) => `<td><strong style="color:#0A68DC;">${j.ref || ('#' + j.id)}</strong></td>`;
       const jOverview = merged.map(j => `
           <tr>${jref(j)}
             <td style="font-weight:700;">${j.role || '—'}</td>
@@ -1064,5 +1085,6 @@ Employers can open it only when you apply to one of their jobs.`);
       document.body.style.overflow = '';
     });
   </script>
+<script src="theme.js" defer></script>
 </body>
 </html>

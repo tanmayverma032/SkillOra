@@ -5,7 +5,7 @@
 
 :root {
   /* Brand Primary Colors */
-  --color-primary-blue: #087BFF;
+  --color-primary-blue: #0A68DC;
   --color-accent-blue: #006EFF;
   --color-navy-dark: #173C62;
   --color-navy-deep: #0D2C4B;
@@ -499,7 +499,7 @@ body {
 }
 
 .hero-search-submit:hover {
-  background-color: #0066df;
+  background-color: #0858BC;
 }
 
 /* Live Search Suggestions Dropdown - Enlarged and Prominent */
@@ -552,7 +552,7 @@ body {
 .ac-top-count-badge {
   font-size: 11.5px;
   font-weight: 800;
-  color: #087BFF;
+  color: #0A68DC;
   background: #FFFFFF;
   border: 1px solid #BFDCFE;
   padding: 3px 10px;
@@ -628,7 +628,7 @@ body {
 }
 
 .ac-tag-college {
-  color: #087BFF;
+  color: #0A68DC;
   background: #EDF6FF;
   border: 1px solid #C7E2FE;
 }
@@ -649,7 +649,7 @@ body {
   padding: 13px 18px;
   font-size: 13px;
   font-weight: 700;
-  color: #087BFF;
+  color: #0A68DC;
   background: #F9FBFE;
   text-align: center;
   cursor: pointer;
@@ -688,7 +688,7 @@ body {
 }
 
 .highlight-item:hover {
-  border-color: #087BFF;
+  border-color: #0A68DC;
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(8, 123, 255, 0.1);
 }
@@ -701,7 +701,7 @@ body {
   height: 32px;
   border-radius: 6px;
   background: #EDF6FF;
-  color: #087BFF;
+  color: #0A68DC;
   flex-shrink: 0;
 }
 
@@ -1146,7 +1146,7 @@ body {
 .view-all-link {
   font-size: 13px;
   font-weight: 700;
-  color: #087BFF;
+  color: #0A68DC;
   text-decoration: none;
   transition: all var(--transition-fast);
 }
@@ -1188,13 +1188,13 @@ body {
 
 .pill-btn:hover {
   background-color: #E1EFFC;
-  border-color: #087BFF;
-  color: #087BFF;
+  border-color: #0A68DC;
+  color: #0A68DC;
 }
 
 .pill-btn.active {
-  background-color: #087BFF;
-  border-color: #087BFF;
+  background-color: #0A68DC;
+  border-color: #0A68DC;
   color: #FFFFFF;
   box-shadow: 0 3px 10px rgba(8, 123, 255, 0.25);
 }
@@ -1226,8 +1226,8 @@ body {
 }
 
 .carousel-nav-btn:hover {
-  background: #087BFF;
-  border-color: #087BFF;
+  background: #0A68DC;
+  border-color: #0A68DC;
   color: #FFFFFF;
   transform: scale(1.1);
   box-shadow: 0 6px 18px rgba(8, 123, 255, 0.3);
@@ -1262,7 +1262,7 @@ body {
 
 .course-card:hover {
   transform: translateY(-5px);
-  border-color: #087BFF;
+  border-color: #0A68DC;
   box-shadow: 0 12px 28px rgba(8, 123, 255, 0.12), 0 4px 10px rgba(10, 37, 64, 0.04);
 }
 
@@ -1399,7 +1399,7 @@ body {
 }
 
 .course-location-row .loc-pin {
-  color: #087BFF;
+  color: #0A68DC;
   font-size: 12px;
   flex-shrink: 0;
 }
@@ -1412,7 +1412,7 @@ body {
 .course-provider {
   font-size: 12px;
   font-weight: 700;
-  color: #087BFF;
+  color: #0A68DC;
   margin-top: auto;
   margin-bottom: 12px;
   white-space: nowrap;
@@ -1438,7 +1438,7 @@ body {
 .btn-view-course {
   width: 100%;
   height: 38px;
-  background: linear-gradient(135deg, #087BFF 0%, #0060DF 100%);
+  background: linear-gradient(135deg, #0A68DC 0%, #0060DF 100%);
   border: none;
   border-radius: 8px;
   color: #FFFFFF;
@@ -1501,7 +1501,7 @@ body {
 }
 
 .btn-become-partner-hero:hover {
-  background-color: #0066df;
+  background-color: #0858BC;
 }
 
 .partner-cards-grid {
@@ -1609,7 +1609,7 @@ body {
 }
 
 .job-item:hover {
-  border-color: #087BFF;
+  border-color: #0A68DC;
   box-shadow: 0 6px 16px rgba(8, 123, 255, 0.1);
   transform: translateY(-2px);
 }
@@ -1668,7 +1668,7 @@ body {
 .job-company {
   font-size: 12px;
   font-weight: 600;
-  color: #087BFF;
+  color: #0A68DC;
   margin: 2px 0;
   white-space: nowrap;
   overflow: hidden;
@@ -2275,7 +2275,7 @@ body {
 }
 
 .btn-primary-submit:hover {
-  background-color: #0066df;
+  background-color: #0858BC;
 }
 
 .btn-secondary-btn {
@@ -3261,7 +3261,7 @@ body {
   width: 100%;
   background: linear-gradient(90deg, #0A2540 0%, #173C62 100%);
   color: #FFFFFF;
-  border-bottom: 2px solid #087BFF;
+  border-bottom: 2px solid #0A68DC;
   position: relative;
   z-index: 990;
   box-shadow: 0 3px 10px rgba(10, 37, 64, 0.15);
@@ -3365,7 +3365,7 @@ body {
 .t-tag-red { background: #E74C3C; color: #FFFFFF; }
 .t-tag-green { background: #0FA66D; color: #FFFFFF; }
 .t-tag-orange { background: #FF922A; color: #FFFFFF; }
-.t-tag-blue { background: #087BFF; color: #FFFFFF; }
+.t-tag-blue { background: #0A68DC; color: #FFFFFF; }
 
 .t-text {
   font-size: 12.5px;
@@ -3392,7 +3392,7 @@ body {
 }
 
 .btn-all-notices {
-  background: #087BFF;
+  background: #0A68DC;
   color: #FFFFFF;
   border: none;
   border-radius: 20px;
@@ -3432,7 +3432,7 @@ body {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #087BFF, #0FA66D);
+  background: linear-gradient(90deg, #0A68DC, #0FA66D);
 }
 
 .bulletin-header-row,
@@ -3542,7 +3542,7 @@ body {
 .cat-hospital,
 .b-tag-green {
   background: #EDF8FF;
-  color: #087BFF;
+  color: #0A68DC;
   border: 1px solid #CCE4FF;
 }
 
@@ -3898,7 +3898,7 @@ body {
 /* Colleges Page Inline Course Details & Accordion */
 .col-details-toggle-btn {
   background: #F0F7FF;
-  color: #087BFF;
+  color: #0A68DC;
   border: 1px solid #C7E3FF;
   padding: 6px 12px;
   border-radius: 6px;
@@ -3939,7 +3939,7 @@ body {
   border-bottom: none;
 }
 .col-selected-highlight {
-  outline: 3px solid #087BFF !important;
+  outline: 3px solid #0A68DC !important;
   box-shadow: 0 8px 24px rgba(8, 123, 255, 0.25) !important;
 }
 
@@ -4330,12 +4330,12 @@ html, body {
 }
 
 .btn-hero-cta.cta-courses {
-  background-color: #087BFF;
+  background-color: #0A68DC;
   color: #FFFFFF;
 }
 
 .btn-hero-cta.cta-courses:hover {
-  background-color: #0066df;
+  background-color: #0858BC;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(8, 123, 255, 0.25);
 }
@@ -4372,8 +4372,8 @@ html, body {
 
 .search-tab-btn:hover {
   background: #FFFFFF;
-  color: #087BFF;
-  border-color: #087BFF;
+  color: #0A68DC;
+  border-color: #0A68DC;
 }
 
 .search-tab-btn.active {
@@ -4418,7 +4418,7 @@ html, body {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.8px;
-  color: #087BFF;
+  color: #0A68DC;
   background: #EDF6FF;
   border: 1px solid #CCE5FF;
   padding: 4px 12px;
@@ -4753,7 +4753,7 @@ html, body {
   .highlight-num {
     font-size: 15px !important;
     font-weight: 800 !important;
-    color: #087BFF !important;
+    color: #0A68DC !important;
     line-height: 1.15 !important;
   }
 

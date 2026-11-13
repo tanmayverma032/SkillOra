@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Direct Job Application & Placement Registration | SkillOra</title>
+  <meta name="description" content="Apply directly for verified healthcare, hospitality, nursing, and corporate job vacancies across India with SkillOra. Upload your resume securely and get connected with premier employers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme.css">
+  <script src="data/config.js"></script>
+  <script src="data/auth_db.js"></script>
+  <script src="theme.js" defer></script>
+  <style>
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    body {
+      background-color: var(--color-surface, #F8FAFC);
+      font-family: var(--font-body, 'Figtree', sans-serif);
+      color: var(--color-text, #1E293B);
+      margin: 0;
+      padding: 0;
+    }
+
+    .apply-hero {
+      background: linear-gradient(135deg, #0A2540 0%, #173C62 60%, #0A68DC 100%);
+      color: #FFFFFF;
+      padding: 56px 20px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .apply-hero::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255, 146, 42, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .apply-hero-content {
+      max-width: 820px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #FFB366;
+      margin-bottom: 16px;
+    }
+    .apply-hero h1 {
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0 0 14px;
+      color: #FFFFFF;
+    }
+    .apply-hero p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #D2E4F5;
+      margin: 0 auto 24px;
+      max-width: 660px;
+    }
+    .hero-benefits-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .hero-benefit-tag {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Container & Form Wrapper */
+    .apply-main-wrap {
+      max-width: 900px;
+      margin: -28px auto 60px;
+      padding: 0 16px;
+      position: relative;
+      z-index: 10;
+    }
+    .apply-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(10, 37, 64, 0.08), 0 2px 6px rgba(10, 37, 64, 0.04);
+      border: 1px solid #E2E8F0;
+      padding: 36px 32px;
+    }
+    @media (max-width: 640px) {
+      .apply-card {
+        padding: 24px 18px;
+        border-radius: 12px;
+      }
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-heading, 'Bricolage Grotesque', sans-serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: #0A2540;
+      margin: 28px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #EDF2F7;
+    }
+    .form-section-title:first-of-type {
+      margin-top: 0;
+    }
+    .section-num {
+      width: 26px;
+      height: 26px;
+      background: #0A68DC;
+      color: #FFFFFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 768px) {
+      .form-grid-2, .form-grid-3 {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    .form-field {
+      margin-bottom: 16px;
+    }
+    .form-field label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #1E293B;
+      margin-bottom: 6px;
+    }
+    .form-field label span.req {
+      color: #EF4444;
+      margin-left: 2px;
+    }
+    .field-hint {
+      font-size: 11.5px;
+      color: #64748B;
+      margin-top: 4px;
+    }
+
+    .input-control {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      font-size: 14px;
+      color: #0F172A;
+      background: #FFFFFF;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      box-sizing: border-box;
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .input-control:focus {
+      border-color: #0A68DC;
+      box-shadow: 0 0 0 3px rgba(10, 104, 220, 0.15);
+    }
+    select.input-control {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px;
+      padding-right: 36px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    textarea.input-control {
+      height: 84px;
+      padding: 10px 14px;
+      resize: vertical;
+    }
+
+    .phone-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .phone-prefix {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      background: #F1F5F9;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #334155;
+      user-select: none;
+    }
+
+    /* Resume Upload Zone */
+    .resume-dropzone {
+      border: 2px dashed #94A3B8;
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .resume-dropzone:hover, .resume-dropzone.dragover {
+      border-color: #0A68DC;
+      background: #EFF6FF;
+    }
+    .dropzone-icon {
+      width: 48px;
+      height: 48px;
+      background: #E0EDFF;
+      color: #0A68DC;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 22px;
+    }
+    .dropzone-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0A2540;
+      margin-bottom: 4px;
+    }
+    .dropzone-sub {
+      font-size: 12.5px;
+      color: #64748B;
+      margin-bottom: 8px;
+    }
+    .btn-browse-file {
+      display: inline-block;
+      background: #FFFFFF;
+      border: 1.5px solid #0A68DC;
+      color: #0A68DC;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 6px;
+      transition: all 0.2s;
+    }
+    .resume-dropzone:hover .btn-browse-file {
+      background: #0A68DC;
+      color: #FFFFFF;
+    }
+
+    /* Selected file pill card */
+    .file-selected-card {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: #EDFDF5;
+      border: 1.5px solid #10B981;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+    .file-selected-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .file-icon-badge {
+      width: 36px;
+      height: 36px;
+      background: #10B981;
+      color: #FFFFFF;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .file-details strong {
+      display: block;
+      font-size: 13.5px;
+      color: #064E3B;
+    }
+    .file-details span {
+      font-size: 11.5px;
+      color: #047857;
+    }
+    .btn-remove-file {
+      background: transparent;
+      border: none;
+      color: #DC2626;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    /* User Profile Banner */
+    .user-auth-banner {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .user-auth-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-avatar-pill {
+      width: 40px;
+      height: 40px;
+      background: #0A68DC;
+      color: #FFFFFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .btn-submit-app {
+      width: 100%;
+      height: 52px;
+      background: #FF922A;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(255, 146, 42, 0.35);
+      margin-top: 24px;
+    }
+    .btn-submit-app:hover {
+      background: #E87E15;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 146, 42, 0.45);
+    }
+    .btn-submit-app:disabled {
+      background: #94A3B8;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Modal */
+    .app-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 37, 64, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .app-modal-card {
+      background: #FFFFFF;
+      border-radius: 18px;
+      max-width: 540px;
+      width: 100%;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+      animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-icon-success {
+      width: 68px;
+      height: 68px;
+      background: #EDFDF5;
+      border: 3px solid #10B981;
+      color: #10B981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 18px;
+    }
+    .ref-badge {
+      display: inline-block;
+      background: #F1F5F9;
+      border: 1px dashed #64748B;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0A68DC;
+      margin: 12px 0 16px;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo" aria-label="SkillOra Home">
+        <div class="logo-mark">
+          <svg class="logo-symbol" viewBox="0 0 38 38" fill="none">
+            <rect width="38" height="38" rx="8" fill="#0A68DC"/>
+            <path d="M10 26L19 12L28 26H10Z" fill="#FFFFFF"/>
+            <circle cx="19" cy="18" r="3.5" fill="#FF922A"/>
+          </svg>
+        </div>
+        <div class="logo-text-group">
+          <span class="logo-title">Skillora <span class="highlight-orange">India</span></span>
+          <span class="logo-tagline">Learn • Skill • Build Your Future</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="jobs.html" class="nav-link">Find Jobs</a>
+        <a href="apply-job.html" class="nav-link" style="color:var(--color-primary-blue);font-weight:800;">Apply for Job</a>
+        <a href="colleges.html" class="nav-link">Colleges & Admissions</a>
+        <a href="contact.html" class="nav-link" id="nav-contact-link">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="auth.html?role=student" class="btn btn-outline-login" id="nav-auth-btn">Student Login</a>
+        <button class="mobile-toggle-btn" id="mobile-toggle" aria-label="Open mobile menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Out Drawer Navigation -->
+  <div class="mobile-nav-drawer" id="mobile-drawer" aria-hidden="true">
+    <div class="mobile-nav-backdrop" id="mobile-backdrop"></div>
+    <div class="mobile-nav-pane">
+      <div class="mobile-nav-header">
+        <div class="brand-logo" style="width:auto;">
+          <span class="logo-title" style="font-size:20px;">Skill<span class="highlight-orange">Ora</span></span>
+        </div>
+        <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">&times;</button>
+      </div>
+      <div class="mobile-nav-links">
+        <a href="index.html" class="mob-link"><span>🏠</span> Home</a>
+        <a href="jobs.html" class="mob-link"><span>💼</span> Find Jobs</a>
+        <a href="apply-job.html" class="mob-link active"><span>📝</span> Apply for Job</a>
+        <a href="colleges.html" class="mob-link"><span>🎓</span> Colleges & Admissions</a>
+        <a href="contact.html" class="mob-link"><span>📞</span> Contact</a>
+        <div class="mob-auth-wrap" style="padding-top:16px;">
+          <a href="auth.html?role=student" class="btn btn-primary-btn" id="mob-auth-btn" style="display:block;text-align:center;">Student Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="apply-hero">
+    <div class="apply-hero-content">
+      <div class="hero-badge-pill">
+        <span>⚡ DIRECT PLACEMENT DRIVE 2026</span>
+      </div>
+      <h1>Candidate Placement & Job Application</h1>
+      <p>
+        Submit your verified candidate profile and resume directly into the SkillOra placement vault.
+        Our recruitment officers match you with certified hospitals, premier hotels, and corporate employers across India.
+      </p>
+      <div class="hero-benefits-row">
+        <span class="hero-benefit-tag">✔ 100% Free Placement Support</span>
+        <span class="hero-benefit-tag">✔ Direct Employer Interviews</span>
+        <span class="hero-benefit-tag">✔ End-to-End Privacy & Encrypted Vault</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application Main Form -->
+  <main class="apply-main-wrap">
+    <div class="apply-card">
+
+      <!-- Logged In User Notification Banner -->
+      <div id="user-banner-wrap" style="display:none;" class="user-auth-banner">
+        <div class="user-auth-info">
+          <div class="user-avatar-pill" id="user-avatar-initial">S</div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#0A2540;" id="user-banner-name">Welcome Back</div>
+            <div style="font-size:12px;color:#0A68DC;" id="user-banner-email">user@skillora.in</div>
+          </div>
+        </div>
+        <div style="font-size:12.5px;color:#059669;font-weight:700;">
+          <span>✓ Profile Auto-Synced</span>
+        </div>
+      </div>
+
+      <form id="apply-job-form" onsubmit="event.preventDefault(); handleJobApplicationSubmit();">
+
+        <!-- 1. PERSONAL INFORMATION -->
+        <div class="form-section-title">
+          <span class="section-num">1</span>
+          <span>Personal Information</span>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-field">
+            <label for="cand-name">Full Name <span class="req">*</span></label>
+            <input type="text" id="cand-name" class="input-control" placeholder="e.g. Pooja Sharma" required>
+          </div>
+          <div class="form-field">
+            <label for="cand-phone">Mobile Number <span class="req">*</span></label>
+            <div class="phone-input-wrap">
+              <span class="phone-prefix">+91</span>
+              <input type="tel" id="cand-phone" class="input-control" placeholder="10-digit mobile number" maxlength="10" required>
+            </div>
+            <div class="field-hint">Interview schedule will be shared via WhatsApp / SMS</div>
+          </div>
+          <div class="form-field">
+            <label for="cand-email">Email Address <span class="req">*</span></label>
+            <input type="email" id="cand-email" class="input-control" placeholder="e.g. candidate@example.com" required>
+          </div>
+        </div>
+
+        <!-- 2. CURRENT LOCATION -->
+        <div class="form-section-title">
+          <span class="section-num">2</span>
+          <span>Current Location (Where you are right now)</span>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="cand-current-city">Current City <span class="req">*</span></label>
+            <input type="text" id="cand-current-city" class="input-control" placeholder="e.g. Bengaluru, Delhi, Lucknow, Jaipur" required>
+          </div>
+          <div class="form-field">
+            <label for="cand-current-state">Current State / UT <span class="req">*</span></label>
+            <select id="cand-current-state" class="input-control" required>
+              <option value="">Select Current State</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+              <option value="Assam">Assam</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Chhattisgarh">Chhattisgarh</option>
+              <option value="Delhi">Delhi NCR</option>
+              <option value="Goa">Goa</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Himachal Pradesh">Himachal Pradesh</option>
+              <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+              <option value="Jharkhand">Jharkhand</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Manipur">Manipur</option>
+              <option value="Meghalaya">Meghalaya</option>
+              <option value="Mizoram">Mizoram</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Odisha">Odisha</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Sikkim">Sikkim</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Tripura">Tripura</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Uttarakhand">Uttarakhand</option>
+              <option value="West Bengal">West Bengal</option>
+              <option value="Other">Other Territory</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3. WORK STATUS & QUALIFICATIONS -->
+        <div class="form-section-title">
+          <span class="section-num">3</span>
+          <span>Employment Status & Qualifications</span>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-field">
+            <label for="cand-work-status">Current Work Status <span class="req">*</span></label>
+            <select id="cand-work-status" class="input-control" required>
+              <option value="">Select Status</option>
+              <option value="Fresher / Entry Level">Fresher / Entry Level (0-1 yr)</option>
+              <option value="Currently Employed (Looking for Change)">Currently Employed (Looking for Better Job)</option>
+              <option value="Serving Notice Period (Immediate Joiner)">Serving Notice Period (Joining in 15-30 Days)</option>
+              <option value="Unemployed / Seeking Immediate Placement">Unemployed / Ready to Join Immediately</option>
+              <option value="Final Year Student / Trainee">Final Year Student / Trainee</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="cand-qualification">Highest Qualification <span class="req">*</span></label>
+            <input type="text" id="cand-qualification" class="input-control" placeholder="e.g. GNM, B.Sc Nursing, BHM, Diploma, B.Com" required>
+          </div>
+          <div class="form-field">
+            <label for="cand-exp">Total Experience</label>
+            <select id="cand-exp" class="input-control">
+              <option value="Fresher">Fresher (0 Years)</option>
+              <option value="Less than 1 Year">Less than 1 Year</option>
+              <option value="1 - 2 Years">1 - 2 Years</option>
+              <option value="2 - 5 Years">2 - 5 Years</option>
+              <option value="5+ Years">5+ Years (Senior)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 4. SECTOR & TARGET LOCATION -->
+        <div class="form-section-title">
+          <span class="section-num">4</span>
+          <span>Target Sector & Preferred Job Location</span>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="cand-sector">Industry / Sector You Need Job In <span class="req">*</span></label>
+            <select id="cand-sector" class="input-control" required onchange="handleSectorChange(this.value)">
+              <option value="">Select Job Sector</option>
+              <option value="Healthcare & Nursing">Healthcare & Nursing (Staff Nurse, ICU, Ward, OT, Hospital Admin)</option>
+              <option value="Hospitality & Hotel Management">Hospitality & Hotel Management (Front Office, F&B, Chef, Housekeeping)</option>
+              <option value="Sales, Retail & Marketing">Sales, Retail & Marketing (Store Executive, Field Sales, BDE)</option>
+              <option value="Office Administration & IT">Office Administration & IT Support (Data Entry, Back Office)</option>
+              <option value="Language & Customer Support">Language & Customer Care (Telesales, BPO, Voice/Non-Voice)</option>
+              <option value="Other Career Sector">Other Vocational / Specialized Sector</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="cand-target-role">Preferred Job Role / Title</label>
+            <input type="text" id="cand-target-role" class="input-control" placeholder="e.g. Staff Nurse, Front Office Executive, F&B Associate">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-field">
+            <label for="cand-pref-location">Area / Cities Where You Want to Work <span class="req">*</span></label>
+            <input type="text" id="cand-pref-location" class="input-control" placeholder="e.g. Delhi NCR, Bengaluru, Mumbai, Anywhere" required>
+          </div>
+          <div class="form-field">
+            <label for="cand-expected-salary">Expected Monthly Salary</label>
+            <select id="cand-expected-salary" class="input-control">
+              <option value="As per Industry Standard">As per Industry Standard</option>
+              <option value="₹ 15,000 - ₹ 22,000 / month">₹ 15,000 - ₹ 22,000 / month</option>
+              <option value="₹ 22,000 - ₹ 35,000 / month">₹ 22,000 - ₹ 35,000 / month</option>
+              <option value="₹ 35,000 - ₹ 50,000+ / month">₹ 35,000 - ₹ 50,000+ / month</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13.5px;color:#334155;cursor:pointer;">
+            <input type="checkbox" id="cand-open-relocate" checked style="width:16px;height:16px;accent-color:#0A68DC;">
+            <span>I am open to relocate to other top tier cities across India if offered food/accommodation or attractive salary.</span>
+          </label>
+        </div>
+
+        <!-- 5. RESUME UPLOAD -->
+        <div class="form-section-title">
+          <span class="section-num">5</span>
+          <span>Upload Your Resume / Curriculum Vitae</span>
+        </div>
+
+        <div id="existing-resume-box" style="display:none;background:#F8FAFC;border:1px solid #CBD5E1;border-radius:10px;padding:14px 18px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:#0A2540;margin-bottom:4px;">Existing Resume on File:</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#0A68DC;">
+              <span>📄</span>
+              <strong id="existing-resume-name">resume.pdf</strong>
+            </div>
+            <label style="font-size:12.5px;color:#334155;cursor:pointer;">
+              <input type="checkbox" id="use-existing-resume" checked onchange="toggleResumeUploadMode()">
+              <span>Use this existing resume for application</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="resume-upload-wrapper">
+          <div class="resume-dropzone" id="resume-dropzone" onclick="document.getElementById('cand-resume-file').click();">
+            <div class="dropzone-icon">📄</div>
+            <div class="dropzone-title">Click to upload or drag & drop your Resume</div>
+            <div class="dropzone-sub">Supported formats: PDF, DOC, DOCX (Maximum file size: 5 MB)</div>
+            <span class="btn-browse-file">Browse File</span>
+            <input type="file" id="cand-resume-file" style="display:none;" accept=".pdf,.doc,.docx" onchange="handleResumeFileSelected(this.files)">
+          </div>
+
+          <div class="file-selected-card" id="file-selected-preview">
+            <div class="file-selected-info">
+              <div class="file-icon-badge">✓</div>
+              <div class="file-details">
+                <strong id="preview-filename">My_Resume.pdf</strong>
+                <span id="preview-filesize">1.2 MB • Verified Format</span>
+              </div>
+            </div>
+            <button type="button" class="btn-remove-file" onclick="removeSelectedResume()">✕ Remove</button>
+          </div>
+        </div>
+
+        <div style="font-size:12px;color:#64748B;margin-top:10px;display:flex;align-items:center;gap:6px;">
+          <span>🔒</span>
+          <span>Resumes are stored in an encrypted, access-restricted database vault. Never shared publicly.</span>
+        </div>
+
+        <!-- 6. OPTIONAL NOTES / SKILLS -->
+        <div class="form-section-title" style="margin-top:28px;">
+          <span class="section-num">6</span>
+          <span>Key Skills & Additional Notes (Optional)</span>
+        </div>
+
+        <div class="form-field">
+          <label for="cand-notes">Briefly mention your certifications, clinical skills, hotel departments, or key strengths</label>
+          <textarea id="cand-notes" class="input-control" placeholder="e.g. Registered Nurse with INC certification, BLS/ACLS trained, 2 years ICU experience, ready to join on 15 days notice."></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-submit-app" id="btn-submit-application">
+          <span>Submit Direct Application & Resume →</span>
+        </button>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Success Confirmation Modal -->
+  <div class="app-modal-overlay" id="success-modal">
+    <div class="app-modal-card">
+      <div class="modal-icon-success">✓</div>
+      <h2 style="font-family:var(--font-heading, sans-serif);font-size:24px;font-weight:800;color:#0A2540;margin:0 0 8px;">Application Received Successfully!</h2>
+      <p style="font-size:14px;color:#475569;line-height:1.5;margin:0 0 16px;">
+        Your candidate profile and resume have been securely synced to our placement database.
+      </p>
+
+      <div style="font-size:12px;color:#64748B;">Application Tracking Reference:</div>
+      <div class="ref-badge" id="modal-ref-id">SKL-APP-2026-9812</div>
+
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:14px;text-align:left;font-size:13px;color:#334155;margin-bottom:20px;line-height:1.6;">
+        <div>👤 <strong>Candidate:</strong> <span id="modal-cand-name">Pooja Sharma</span></div>
+        <div>💼 <strong>Target Sector:</strong> <span id="modal-cand-sector">Healthcare & Nursing</span></div>
+        <div>📍 <strong>Locations:</strong> <span id="modal-cand-loc">Current: Delhi | Preferred: Bengaluru</span></div>
+        <div>📄 <strong>Resume Vault:</strong> <span style="color:#059669;font-weight:700;">Uploaded & Encrypted</span></div>
+      </div>
+
+      <p style="font-size:13px;color:#64748B;margin-bottom:24px;">
+        SkillOra Placement Cell will review your profile within <strong>24 to 48 hours</strong> and notify you for direct hospital/hotel walk-in drives.
+      </p>
+
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <a href="dashboard.html" class="btn" style="background:#0A68DC;color:#FFFFFF;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13.5px;text-decoration:none;">View in Student Dashboard</a>
+        <a href="jobs.html" class="btn" style="background:#F1F5F9;color:#334155;border:1px solid #CBD5E1;padding:10px 20px;border-radius:8px;font-weight:700;font-size:13.5px;text-decoration:none;">Browse Verified Jobs</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Standard Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <div class="footer-logo">
+            <span class="logo-title" style="color:#FFFFFF;">Skillora <span class="highlight-orange">India</span></span>
+          </div>
+          <p class="footer-about">
+            India's dedicated vocational education intelligence and verified placement network. Connecting learners with accredited colleges and career opportunities.
+          </p>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-heading">Career Placements</h4>
+          <ul class="footer-links">
+            <li><a href="jobs.html">Verified Job Openings</a></li>
+            <li><a href="apply-job.html">Direct Candidate Application</a></li>
+            <li><a href="employer-portal.html">Hospital & Hotel Recruiter Portal</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-heading">Education & Admissions</h4>
+          <ul class="footer-links">
+            <li><a href="colleges.html">College Directory</a></li>
+            <li><a href="college-portal.html">College Partner Portal</a></li>
+            <li><a href="dashboard.html">Student Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-nav-col">
+          <h4 class="footer-heading">Legal & Compliance</h4>
+          <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="refund.html">Refund Policy</a></li>
+            <li><a href="contact.html">Help & Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom-bar">
+        <div class="footer-copy">© 2026 SkillOra Education Foundation. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let CURRENT_STUDENT = null;
+    let SELECTED_RESUME_FILE = null;
+
+    // Mobile Drawer Toggle
+    const mobileBtn = document.getElementById('mobile-toggle');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+    const mobileClose = document.getElementById('mobile-drawer-close');
+    const mobileBackdrop = document.getElementById('mobile-backdrop');
+
+    function toggleDrawer(open) {
+      if (!mobileDrawer) return;
+      if (open) {
+        mobileDrawer.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+    if (mobileBtn) mobileBtn.addEventListener('click', () => toggleDrawer(true));
+    if (mobileClose) mobileClose.addEventListener('click', () => toggleDrawer(false));
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', () => toggleDrawer(false));
+
+    // Handle Sector Pre-fill from URL query (?sector=Healthcare)
+    function handleSectorChange(val) {
+      const roleInput = document.getElementById('cand-target-role');
+      if (!roleInput || roleInput.value) return;
+      if (val.includes('Health') || val.includes('Nursing')) roleInput.placeholder = 'e.g. Staff Nurse, ICU Nurse, Ward Nurse';
+      else if (val.includes('Hosp')) roleInput.placeholder = 'e.g. Front Office Executive, F&B Captain, Chef de Partie';
+      else if (val.includes('Sales')) roleInput.placeholder = 'e.g. Retail Store Executive, Field Sales Officer';
+      else roleInput.placeholder = 'e.g. Operational Associate';
+    }
+
+    // Drag and Drop listeners
+    const dropzone = document.getElementById('resume-dropzone');
+    if (dropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); });
+      });
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover'); });
+      });
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files.length) handleResumeFileSelected(dt.files);
+      });
+    }
+
+    function handleResumeFileSelected(files) {
+      if (!files || !files.length) return;
+      const file = files[0];
+      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const ext = file.name.split('.').pop().toLowerCase();
+
+      if (!['pdf', 'doc', 'docx'].includes(ext)) {
+        alert('Invalid file format. Please upload a PDF, DOC, or DOCX resume.');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size exceeds 5 MB. Please select a smaller resume file.');
+        return;
+      }
+
+      SELECTED_RESUME_FILE = file;
+      const preview = document.getElementById('file-selected-preview');
+      const fname = document.getElementById('preview-filename');
+      const fsize = document.getElementById('preview-filesize');
+      const kb = Math.round(file.size / 1024);
+      const sizeTxt = kb > 1024 ? `${(kb / 1024).toFixed(1)} MB` : `${kb} KB`;
+
+      if (fname) fname.textContent = file.name;
+      if (fsize) fsize.textContent = `${sizeTxt} • Ready for Secure Upload`;
+      if (preview) preview.style.display = 'flex';
+
+      const chk = document.getElementById('use-existing-resume');
+      if (chk) chk.checked = false;
+    }
+
+    function removeSelectedResume() {
+      SELECTED_RESUME_FILE = null;
+      const fileInput = document.getElementById('cand-resume-file');
+      if (fileInput) fileInput.value = '';
+      const preview = document.getElementById('file-selected-preview');
+      if (preview) preview.style.display = 'none';
+    }
+
+    function toggleResumeUploadMode() {
+      const chk = document.getElementById('use-existing-resume');
+      const wrap = document.getElementById('resume-upload-wrapper');
+      if (chk && wrap) {
+        wrap.style.opacity = chk.checked ? '0.45' : '1';
+        wrap.style.pointerEvents = chk.checked ? 'none' : 'auto';
+      }
+    }
+
+    // Submit handler
+    async function handleJobApplicationSubmit() {
+      const btn = document.getElementById('btn-submit-application');
+      const name = document.getElementById('cand-name').value.trim();
+      const phone = document.getElementById('cand-phone').value.trim();
+      const email = document.getElementById('cand-email').value.trim();
+      const currentCity = document.getElementById('cand-current-city').value.trim();
+      const currentState = document.getElementById('cand-current-state').value;
+      const workStatus = document.getElementById('cand-work-status').value;
+      const qualification = document.getElementById('cand-qualification').value.trim();
+      const exp = document.getElementById('cand-exp').value;
+      const sector = document.getElementById('cand-sector').value;
+      const targetRole = document.getElementById('cand-target-role').value.trim();
+      const prefLoc = document.getElementById('cand-pref-location').value.trim();
+      const expectedSalary = document.getElementById('cand-expected-salary').value;
+      const openRelocate = document.getElementById('cand-open-relocate').checked;
+      const notes = document.getElementById('cand-notes').value.trim();
+
+      const useExistingResume = document.getElementById('use-existing-resume')?.checked;
+
+      if (!SELECTED_RESUME_FILE && (!useExistingResume || !CURRENT_STUDENT || !CURRENT_STUDENT.resumePath)) {
+        alert('Please attach your resume file (PDF, DOC, DOCX) to complete your application.');
+        const drop = document.getElementById('resume-dropzone');
+        if (drop) { drop.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span style="display:inline-block;animation:spin 1s infinite linear;">↻</span> Encrypting & Uploading to Cloud Vault...';
+      }
+
+      try {
+        const fullPrefLoc = [prefLoc, openRelocate ? '(Open to Pan-India Relocation)' : ''].filter(Boolean).join(' ');
+        const fullNotes = [notes, expectedSalary ? `Expected: ${expectedSalary}` : ''].filter(Boolean).join(' | ');
+
+        const payload = {
+          name,
+          phone,
+          email,
+          currentCity,
+          currentState,
+          workStatus,
+          qualification,
+          experience: exp,
+          sector,
+          targetRole,
+          preferredLocation: fullPrefLoc,
+          notes: fullNotes,
+          resumeFile: SELECTED_RESUME_FILE,
+          resumePath: (useExistingResume && CURRENT_STUDENT) ? CURRENT_STUDENT.resumePath : null,
+          resumeName: (useExistingResume && CURRENT_STUDENT) ? CURRENT_STUDENT.resumeName : null
+        };
+
+        const res = await window.SkillOraAuth.submitDirectJobApplication(payload);
+
+        if (!res.success) {
+          alert('Submission Error: ' + res.message);
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<span>Submit Direct Application & Resume →</span>';
+          }
+          return;
+        }
+
+        // Show Success Modal
+        document.getElementById('modal-ref-id').textContent = res.refId || 'SKL-APP-2026';
+        document.getElementById('modal-cand-name').textContent = name;
+        document.getElementById('modal-cand-sector').textContent = sector;
+        document.getElementById('modal-cand-loc').textContent = `Current: ${currentCity}, ${currentState} | Target: ${prefLoc}`;
+        document.getElementById('success-modal').style.display = 'flex';
+
+        // Reset form
+        document.getElementById('apply-job-form').reset();
+        removeSelectedResume();
+
+      } catch (err) {
+        console.error('Job application submission error:', err);
+        alert('Could not submit application. Please check your internet connection.');
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<span>Submit Direct Application & Resume →</span>';
+        }
+      }
+    }
+
+    // Auto-fill logged-in student details
+    window.addEventListener('DOMContentLoaded', () => {
+      // Check URL parameters for pre-filling
+      const urlParams = new URLSearchParams(window.location.search);
+      const preSector = urlParams.get('sector');
+      const preRole = urlParams.get('role');
+      if (preSector) {
+        const secSelect = document.getElementById('cand-sector');
+        if (secSelect) {
+          for (let opt of secSelect.options) {
+            if (opt.value.toLowerCase().includes(preSector.toLowerCase())) {
+              secSelect.value = opt.value;
+              break;
+            }
+          }
+        }
+      }
+      if (preRole) {
+        const roleInput = document.getElementById('cand-target-role');
+        if (roleInput) roleInput.value = preRole;
+      }
+
+      // Check Authentication
+      if (window.SkillOraAuth) {
+        const user = window.SkillOraAuth.getCurrentUser('student');
+        if (user) {
+          CURRENT_STUDENT = user;
+          const banner = document.getElementById('user-banner-wrap');
+          const bName = document.getElementById('user-banner-name');
+          const bEmail = document.getElementById('user-banner-email');
+          const bInitial = document.getElementById('user-avatar-initial');
+          const authBtn = document.getElementById('nav-auth-btn');
+          const mobAuth = document.getElementById('mob-auth-btn');
+
+          if (banner) banner.style.display = 'flex';
+          if (bName) bName.textContent = user.name || 'Verified Student';
+          if (bEmail) bEmail.textContent = user.email || '';
+          if (bInitial && user.name) bInitial.textContent = user.name.charAt(0).toUpperCase();
+
+          if (authBtn) {
+            authBtn.textContent = 'Dashboard';
+            authBtn.href = 'dashboard.html';
+          }
+          if (mobAuth) {
+            mobAuth.textContent = 'Dashboard';
+            mobAuth.href = 'dashboard.html';
+          }
+
+          // Pre-fill form fields
+          if (user.name) document.getElementById('cand-name').value = user.name;
+          if (user.phone) document.getElementById('cand-phone').value = user.phone;
+          if (user.email) document.getElementById('cand-email').value = user.email;
+          if (user.city) document.getElementById('cand-current-city').value = user.city;
+          if (user.state) {
+            const stSelect = document.getElementById('cand-current-state');
+            if (stSelect) stSelect.value = user.state;
+          }
+          if (user.qualification) document.getElementById('cand-qualification').value = user.qualification;
+          if (user.sector) {
+            const sSelect = document.getElementById('cand-sector');
+            if (sSelect) {
+              for (let opt of sSelect.options) {
+                if (opt.value.toLowerCase().includes(user.sector.toLowerCase())) {
+                  sSelect.value = opt.value;
+                  break;
+                }
+              }
+            }
+          }
+
+          // Existing Resume Check
+          if (user.resumePath || user.resumeName) {
+            const existBox = document.getElementById('existing-resume-box');
+            const rName = document.getElementById('existing-resume-name');
+            if (existBox) existBox.style.display = 'block';
+            if (rName) rName.textContent = user.resumeName || 'My_Resume.pdf';
+            toggleResumeUploadMode();
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

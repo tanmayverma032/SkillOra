@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
   <script src="data/config.js"></script>
   <script src="data/auth_db.js"></script>
   <style>
@@ -36,7 +38,7 @@
       overflow: hidden;
     }
     .auth-side-banner {
-      background: linear-gradient(135deg, #0D2C4B 0%, #173C62 50%, #087BFF 100%);
+      background: linear-gradient(135deg, #0D2C4B 0%, #173C62 50%, #0A68DC 100%);
       color: #FFFFFF;
       padding: 40px 32px;
       display: flex;
@@ -359,7 +361,7 @@
       <a href="index.html" class="brand-logo" aria-label="SkillOra Home">
         <div class="logo-mark">
           <svg class="logo-symbol" viewBox="0 0 38 38" fill="none">
-            <rect width="38" height="38" rx="8" fill="#087BFF"/>
+            <rect width="38" height="38" rx="8" fill="#0A68DC"/>
             <path d="M10 26L19 12L28 26H10Z" fill="#FFFFFF"/>
             <circle cx="19" cy="18" r="3.5" fill="#FF922A"/>
           </svg>
@@ -423,13 +425,13 @@
         <!-- 3-Role Switcher Tabs -->
         <div class="role-selector-tabs" role="tablist">
           <button class="role-tab-btn active" id="role-btn-student" onclick="switchRole('student')">
-            <span>🎓</span> Student User
+            <span></span> Student User
           </button>
           <button class="role-tab-btn" id="role-btn-college" onclick="switchRole('college')">
-            <span>🏫</span> College User
+            <span></span> College User
           </button>
           <button class="role-tab-btn" id="role-btn-employer" onclick="switchRole('employer')">
-            <span>💼</span> Job User / HR
+            <span></span> Job User / HR
           </button>
         </div>
 
@@ -459,7 +461,7 @@
             <input type="password" id="signin-password" class="auth-input" placeholder="Enter your password" required>
           </div>
 
-          <button type="submit" class="auth-btn-submit" id="btn-signin-submit">Sign In to Student Dashboard →</button>
+          <button type="submit" class="auth-btn-submit" id="btn-signin-submit">Sign in to student dashboard</button>
         </form>
 
         <!-- ================================================================= -->
@@ -511,7 +513,7 @@
             <input type="password" id="student-password" class="auth-input" placeholder="Minimum 8 characters" minlength="8" autocomplete="new-password" required>
           </div>
 
-          <button type="submit" class="auth-btn-submit" id="btn-student-submit">Create Student Account & Open Dashboard →</button>
+          <button type="submit" class="auth-btn-submit" id="btn-student-submit">Create student account</button>
         </form>
 
         <!-- ================================================================= -->
@@ -570,7 +572,7 @@
             <input type="password" id="college-password" class="auth-input" placeholder="Minimum 8 characters" minlength="8" autocomplete="new-password" required>
           </div>
 
-          <button type="submit" class="auth-btn-submit" style="background:#0FA66D;">Register Institute & Open College Portal →</button>
+          <button type="submit" class="auth-btn-submit" style="background:#0FA66D;">Register Institute & Open College Portal</button>
         </form>
 
         <!-- ================================================================= -->
@@ -630,7 +632,7 @@
             <input type="password" id="employer-password" class="auth-input" placeholder="Minimum 8 characters" minlength="8" autocomplete="new-password" required>
           </div>
 
-          <button type="submit" class="auth-btn-submit" style="background:#FF922A;">Register Employer & Open Hiring Portal →</button>
+          <button type="submit" class="auth-btn-submit" style="background:#FF922A;">Register Employer & Open Hiring Portal</button>
         </form>
 
       </div>
@@ -698,7 +700,7 @@
         statBox3: { val: "", lbl: "" },
         idLabel: "Email Address *",
         idPlaceholder: "Your registered email",
-        submitText: "Sign In to Student Dashboard →",
+        submitText: "Sign in to student dashboard",
         portalUrl: "dashboard.html"
       },
       college: {
@@ -714,7 +716,7 @@
         statBox3: { val: "", lbl: "" },
         idLabel: "Email Address *",
         idPlaceholder: "Your registered email",
-        submitText: "Sign In to College Partner Portal →",
+        submitText: "Sign in to college partner portal",
         portalUrl: "college-portal.html"
       },
       employer: {
@@ -730,7 +732,7 @@
         statBox3: { val: "", lbl: "" },
         idLabel: "Email Address *",
         idPlaceholder: "Your registered email",
-        submitText: "Sign In to Employer Hiring Portal →",
+        submitText: "Sign in to employer hiring portal",
         portalUrl: "employer-portal.html"
       }
     };
@@ -939,7 +941,7 @@
 
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Create Student Account & Open Dashboard →';
+        submitBtn.textContent = 'Create student account';
       }
 
       if (!res.success) {
@@ -1050,5 +1052,6 @@
       }
     };
   </script>
+<script src="theme.js" defer></script>
 </body>
 </html>

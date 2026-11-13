@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
   <script src="data/config.js"></script>
   <script src="data/auth_db.js"></script>
   <style>
@@ -49,7 +51,7 @@
       height: 64px;
       border-radius: 50%;
       background: #EDF8FF;
-      color: #087BFF;
+      color: #0A68DC;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -106,13 +108,13 @@
       transition: border-color var(--transition-fast);
     }
     .gate-input:focus {
-      border-color: #087BFF;
+      border-color: #0A68DC;
       box-shadow: 0 0 0 3px rgba(8, 123, 255, 0.15);
     }
     .btn-unlock-admin {
       width: 100%;
       height: 46px;
-      background: #087BFF;
+      background: #0A68DC;
       color: #FFFFFF;
       border: none;
       border-radius: 8px;
@@ -146,7 +148,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 24px;
-      border-bottom: 2px solid #087BFF;
+      border-bottom: 2px solid #0A68DC;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -161,7 +163,7 @@
       font-size: 20px;
     }
     .admin-badge-pill {
-      background: #087BFF;
+      background: #0A68DC;
       color: #FFFFFF;
       font-size: 11px;
       font-weight: 700;
@@ -310,7 +312,7 @@
       flex-shrink: 0;
     }
     .act-badge-course { background: #EDFDF5; color: #0FA66D; border: 1px solid #B8EED4; }
-    .act-badge-job { background: #EDF8FF; color: #087BFF; border: 1px solid #BEDCFA; }
+    .act-badge-job { background: #EDF8FF; color: #0A68DC; border: 1px solid #BEDCFA; }
     .act-badge-inquiry { background: #FFF4E5; color: #D97706; border: 1px solid #FCD34D; }
     .activity-content {
       flex: 1;
@@ -355,7 +357,7 @@
       gap: 6px;
     }
     .crm-sub-tab-btn.active {
-      background: #087BFF;
+      background: #0A68DC;
       color: #FFFFFF;
     }
 
@@ -439,9 +441,9 @@
         flex-shrink: 0;
       }
       .admin-nav-item.active {
-        background: #087BFF;
+        background: #0A68DC;
         color: #FFFFFF;
-        border-color: #087BFF;
+        border-color: #0A68DC;
       }
       .admin-content-pane {
         padding: 14px;
@@ -607,7 +609,7 @@
                 <span>Job Vacancy Applications</span>
               </div>
               <div class="stat-tile">
-                <strong id="dash-inquiries-count" style="color:#087BFF;">0</strong>
+                <strong id="dash-inquiries-count" style="color:#0A68DC;">0</strong>
                 <span>Contact Web Messages</span>
               </div>
               <div class="stat-tile">
@@ -756,7 +758,7 @@
             </div>
 
             <!-- Inline Add College Form -->
-            <div id="add-college-box" style="display:none;background:#F8FCFF;border:1px dashed #087BFF;border-radius:8px;padding:18px;margin-bottom:18px;">
+            <div id="add-college-box" style="display:none;background:#F8FCFF;border:1px dashed #0A68DC;border-radius:8px;padding:18px;margin-bottom:18px;">
               <h4 style="font-size:14px;color:var(--color-navy-dark);margin-bottom:12px;">Register & Publish New College</h4>
               <div class="form-grid-2">
                 <input type="text" id="new-col-name" placeholder="College Name *" class="auth-input">
@@ -945,7 +947,7 @@
               <div class="stat-tile"><strong>18,420</strong><span>Monthly Visitors</span></div>
               <div class="stat-tile"><strong>1,429</strong><span>Applications Initiated</span></div>
               <div class="stat-tile"><strong style="color:#0FA66D;">978</strong><span>Direct Counseling Slots</span></div>
-              <div class="stat-tile"><strong style="color:#087BFF;">68.4%</strong><span>End-to-End Conversion</span></div>
+              <div class="stat-tile"><strong style="color:#0A68DC;">68.4%</strong><span>End-to-End Conversion</span></div>
             </div>
           </div>
         </section>
@@ -1050,6 +1052,10 @@
       setTimeout(() => banner.remove(), 4000);
     }
 
+    function showAdminNotice(msg) {
+      showLiveToastNotification(msg);
+    }
+
     function handleAdminLogout() {
       if (confirm('Lock and log out of the Administrative Console?')) {
         window.SkillOraAuth.adminSignOut();
@@ -1115,9 +1121,13 @@
       }));
       LIVE_JOB_APPLICATIONS = apps.map(d => ({
         id: 'A-' + d.id, dbId: d.id, name: esc(d.candidate_name), phone: esc(d.phone), email: esc(d.email || '—'),
-        role: esc((d.jobs && d.jobs.title) || '—'), company: esc((d.jobs && d.jobs.employer_name) || '—'),
-        location: esc(d.jobs ? [d.jobs.location_city, d.jobs.location_state].filter(Boolean).join(', ') : '—'),
-        exp: esc(d.experience_years || '—'), resume: '', date: fmtDate(d.applied_at), stage: esc(d.stage || 'Applied')
+        role: esc((d.jobs && d.jobs.title) || d.target_role || (d.sector ? d.sector + ' Candidate' : 'Direct Placement')),
+        company: esc((d.jobs && d.jobs.employer_name) || (d.work_status ? 'Status: ' + d.work_status : 'Direct Applicant')),
+        location: esc(d.jobs ? [d.jobs.location_city, d.jobs.location_state].filter(Boolean).join(', ') : [d.current_city, d.current_state].filter(Boolean).join(', ') || '—'),
+        exp: esc(d.experience_years || d.work_status || '—'),
+        resumePath: d.resume_path || null,
+        notes: esc(d.recruiter_notes || ''),
+        date: fmtDate(d.applied_at), stage: esc(d.stage || 'Applied')
       }));
       LIVE_CONTACT_INQUIRIES = inq.map(d => ({
         id: d.id, name: esc(d.name), phone: esc(d.phone || ''), email: esc(d.email || ''), topic: esc(d.subject || 'General Support'),
@@ -1173,8 +1183,8 @@
 
       tbody.innerHTML = nonStudentUsers.map(u => `
         <tr>
-          <td><strong style="color:#087BFF;">${u.id || 'USR-N/A'}</strong></td>
-          <td><span class="role-badge" style="text-transform:capitalize;background:${u.role==='employer'?'#FEF6EC':u.role==='college'?'#EDFDF5':'#EDF8FF'};color:${u.role==='employer'?'#FF922A':u.role==='college'?'#0FA66D':'#087BFF'};padding:2px 8px;border-radius:4px;font-weight:700;font-size:11px;">${u.role || 'Partner'}</span></td>
+          <td><strong style="color:#0A68DC;">${u.id || 'USR-N/A'}</strong></td>
+          <td><span class="role-badge" style="text-transform:capitalize;background:${u.role==='employer'?'#FEF6EC':u.role==='college'?'#EDFDF5':'#EDF8FF'};color:${u.role==='employer'?'#FF922A':u.role==='college'?'#0FA66D':'#0A68DC'};padding:2px 8px;border-radius:4px;font-weight:700;font-size:11px;">${u.role || 'Partner'}</span></td>
           <td style="font-weight:700;">${u.name}</td>
           <td>${u.email}<br><span style="font-size:11px;color:var(--text-muted);">📱 ${u.phone || '—'}</span></td>
           <td>${u.orgName || u.sector || 'Partner Org'}</td>
@@ -1279,9 +1289,9 @@
 
       tbody.innerHTML = list.map(c => `
         <tr>
-          <td><strong style="color:#087BFF;">${c.id}</strong></td>
+          <td><strong style="color:#0A68DC;">${c.id}</strong></td>
           <td style="font-weight:700;">${c.name}</td>
-          <td><a href="tel:${c.phone}" style="color:#087BFF;text-decoration:none;font-weight:700;">📱 ${c.phone}</a></td>
+          <td><a href="tel:${c.phone}" style="color:#0A68DC;text-decoration:none;font-weight:700;">📱 ${c.phone}</a></td>
           <td><strong>${c.course}</strong></td>
           <td>${c.college}</td>
           <td>${c.location}</td>
@@ -1301,6 +1311,33 @@
       `).join('');
     }
 
+    async function openAdminResume(path) {
+      if (!path) { alert('No resume file attached for this application.'); return; }
+      try {
+        const url = await window.SkillOraAuth.getApplicantResumeLink(path);
+        if (url) {
+          window.open(url, '_blank');
+        } else {
+          alert('Could not generate secure signed URL for resume. Ensure you are signed in as an administrator.');
+        }
+      } catch (e) {
+        alert('Error retrieving resume: ' + e.message);
+      }
+    }
+
+    async function handleAdminAppStageChange(appId, newStage, candName) {
+      try {
+        const ok = await window.SkillOraAuth.updateJobApplicationStageInCloud(appId, newStage);
+        if (ok) {
+          showAdminNotice(`Stage updated to "${newStage}" for candidate ${candName}.`);
+        } else {
+          alert('Could not update stage in cloud database.');
+        }
+      } catch (e) {
+        alert('Error updating stage: ' + e.message);
+      }
+    }
+
     function renderJobApplicationsTable(list = LIVE_JOB_APPLICATIONS) {
       const tbody = document.getElementById('crm-job-table-body');
       if (!tbody) return;
@@ -1317,20 +1354,22 @@
         <tr>
           <td><strong style="color:#FF922A;">${j.id}</strong></td>
           <td style="font-weight:700;">${j.name}</td>
-          <td><a href="tel:${j.phone}" style="color:#087BFF;text-decoration:none;font-weight:700;">📱 ${j.phone}</a></td>
+          <td><a href="tel:${j.phone}" style="color:#0A68DC;text-decoration:none;font-weight:700;">📱 ${j.phone}</a></td>
           <td><strong>${j.role}</strong></td>
           <td>${j.company}</td>
           <td>${j.exp}</td>
           <td>
-            <a href="javascript:void(0)" onclick="alert('Viewing Verified Candidate Resume: ' + '${j.resume}')" style="color:#087BFF;font-weight:700;text-decoration:none;">📄 View Resume</a>
+            ${j.resumePath ? `<button class="btn btn-secondary-btn" style="padding:4px 8px;font-size:11px;color:#0A68DC;border-color:#0A68DC;" onclick="openAdminResume('${j.resumePath}')">📄 View Resume</button>` : `<span style="font-size:11px;color:#94A3B8;">No file</span>`}
           </td>
           <td>${j.date}</td>
           <td>
-            <select class="stage-select" onchange="j.stage=this.value; alert('Hiring stage for ' + '${j.name}' + ' updated to ' + this.value);">
+            <select class="stage-select" onchange="handleAdminAppStageChange(${j.dbId}, this.value, '${j.name}')">
               <option value="Applied" ${j.stage==='Applied'?'selected':''}>Applied</option>
               <option value="Under Review" ${j.stage==='Under Review'?'selected':''}>Under Review</option>
               <option value="Shortlisted for Interview" ${j.stage==='Shortlisted for Interview'?'selected':''}>Shortlisted</option>
               <option value="Interview Scheduled" ${j.stage==='Interview Scheduled'?'selected':''}>Interview Scheduled</option>
+              <option value="Selected" ${j.stage==='Selected'?'selected':''}>Selected</option>
+              <option value="Rejected" ${j.stage==='Rejected'?'selected':''}>Rejected</option>
             </select>
           </td>
           <td>
@@ -1357,9 +1396,9 @@
 
       tbody.innerHTML = LIVE_CONTACT_INQUIRIES.map((inq, idx) => `
         <tr>
-          <td><strong style="color:#087BFF;">#${inq.id || ('MSG-' + idx)}</strong></td>
+          <td><strong style="color:#0A68DC;">#${inq.id || ('MSG-' + idx)}</strong></td>
           <td><strong>${inq.name || 'Anonymous'}</strong></td>
-          <td><a href="tel:${inq.phone}" style="color:#087BFF;font-weight:700;text-decoration:none;">📞 ${inq.phone || '—'}</a></td>
+          <td><a href="tel:${inq.phone}" style="color:#0A68DC;font-weight:700;text-decoration:none;">📞 ${inq.phone || '—'}</a></td>
           <td><a href="mailto:${inq.email}" style="color:#55708E;text-decoration:none;">✉️ ${inq.email || '—'}</a></td>
           <td><span class="pill-category">${inq.topic || 'General Support'}</span></td>
           <td style="max-width:260px;font-size:12.5px;color:var(--text-dark);">
@@ -1405,7 +1444,7 @@
 
       tbody.innerHTML = logs.map(l => `
         <tr>
-          <td><strong style="color:#087BFF;">#${l.id || 'ADM-AUTH'}</strong></td>
+          <td><strong style="color:#0A68DC;">#${l.id || 'ADM-AUTH'}</strong></td>
           <td style="font-weight:700;color:var(--text-dark);">${l.timestamp}</td>
           <td><strong>${l.adminId}</strong></td>
           <td style="font-size:12.5px;color:#55708E;">${l.authMethod || 'SHA-256 Master Key'}</td>
@@ -1561,5 +1600,6 @@
       }
     };
   </script>
+<script src="theme.js" defer></script>
 </body>
 </html>
